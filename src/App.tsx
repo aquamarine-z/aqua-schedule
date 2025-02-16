@@ -10,15 +10,15 @@ import {AppTitleBar} from "@/components/app-title-bar.tsx";
 function App() {
     
     return <SidebarProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={"/aqua-schedule"}>
             <AppSidebar/>
             <main className={"h-[100vh] w-full overflow-hidden"}>
                 <div className={"flex flex-col w-full h-full overflow-y-scroll"}>
                     <AppTitleBar/>
                         <Routes>
                         <Route path={"/schedule_extractor"} element={<ScheduleExtractor/>}/>
-                        <Route path={"/"} element={<MainPage/>}/>
-                        <Route path={"schedule_viewer"} element={<ScheduleViewer/>}/>
+                        <Route path={"/main"} element={<MainPage/>}/>
+                        <Route path={""} element={<ScheduleViewer/>}/>
                     </Routes>
                     </div>
                 

@@ -27,8 +27,8 @@ export function AppSidebar() {
                                 if(schedule.selectedIndex!==index){
                                     setSchedule({...schedule,selectedIndex:index})
                                 }
-                                navigate("/schedule_viewer")
-                            }} className={"flex items-center justify-center"} asChild  isActive={location.pathname==="/schedule_viewer"&&schedule.selectedIndex===index}>
+                                navigate("/")
+                            }} className={"flex items-center justify-center"} asChild  isActive={location.pathname==="/"&&schedule.selectedIndex===index}>
                                 <span className={"text-center"}>{item.name}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
@@ -40,7 +40,7 @@ export function AppSidebar() {
                     <SidebarGroupLabel>页面导航</SidebarGroupLabel>
                     <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton isActive={location.pathname==="/"} className={"flex items-center justify-center"} asChild onClick={()=>{navigate("/")}}>
+                        <SidebarMenuButton isActive={location.pathname==="/main"} className={"flex items-center justify-center"} asChild onClick={()=>{navigate("/main")}}>
                            <span className={"text-center text-2xl"}>首页</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
