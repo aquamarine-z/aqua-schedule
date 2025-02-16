@@ -1,0 +1,756 @@
+{
+  "name": "SE3-2025-Spring",
+  "startTime": {
+    "year": "2025",
+    "month": "2",
+    "dayOfMonth": "24"
+  },
+  "classTimes": [
+    {
+      "from": {
+        "hour": 8,
+        "minute": 0
+      },
+      "to": {
+        "hour": 8,
+        "minute": 45
+      }
+    },
+    {
+      "from": {
+        "hour": 8,
+        "minute": 55
+      },
+      "to": {
+        "hour": 9,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 10,
+        "minute": 0
+      },
+      "to": {
+        "hour": 10,
+        "minute": 45
+      }
+    },
+    {
+      "from": {
+        "hour": 10,
+        "minute": 55
+      },
+      "to": {
+        "hour": 11,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 12,
+        "minute": 10
+      },
+      "to": {
+        "hour": 12,
+        "minute": 55
+      }
+    },
+    {
+      "from": {
+        "hour": 13,
+        "minute": 5
+      },
+      "to": {
+        "hour": 13,
+        "minute": 50
+      }
+    },
+    {
+      "from": {
+        "hour": 14,
+        "minute": 0
+      },
+      "to": {
+        "hour": 14,
+        "minute": 45
+      }
+    },
+    {
+      "from": {
+        "hour": 14,
+        "minute": 55
+      },
+      "to": {
+        "hour": 15,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 15,
+        "minute": 50
+      },
+      "to": {
+        "hour": 16,
+        "minute": 35
+      }
+    },
+    {
+      "from": {
+        "hour": 16,
+        "minute": 55
+      },
+      "to": {
+        "hour": 17,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 17,
+        "minute": 50
+      },
+      "to": {
+        "hour": 18,
+        "minute": 35
+      }
+    },
+    {
+      "from": {
+        "hour": 19,
+        "minute": 20
+      },
+      "to": {
+        "hour": 20,
+        "minute": 5
+      }
+    },
+    {
+      "from": {
+        "hour": 20,
+        "minute": 15
+      },
+      "to": {
+        "hour": 21,
+        "minute": 0
+      }
+    },
+    {
+      "from": {
+        "hour": 21,
+        "minute": 10
+      },
+      "to": {
+        "hour": 21,
+        "minute": 55
+      }
+    }
+  ],
+  "schedule": [
+    {
+      "name": "计算机网络",
+      "weekIndex": [
+        11,
+        12
+      ],
+      "classIndexFrom": 1,
+      "classIndexTo": 3,
+      "weekday": 1,
+      "classLocation": "北区  27-0404",
+      "teachers": [
+        "张明悦",
+        "计外3"
+      ],
+      "teachingClassName": " 计算机网络-0004",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:48,实验:24",
+      "weekTime": 3,
+      "totalTime": 48,
+      "point": 4,
+      "classType": 2
+    },
+    {
+      "name": "操作系统原理",
+      "weekIndex": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "classIndexFrom": 1,
+      "classIndexTo": 2,
+      "weekday": 2,
+      "classLocation": "北区  25-0702",
+      "teachers": [
+        "黄俊杰"
+      ],
+      "teachingClassName": " 操作系统原理-0006A",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:48,实验:24",
+      "weekTime": 2,
+      "totalTime": 24,
+      "point": 4,
+      "classType": 1
+    },
+    {
+      "name": "计算机网络",
+      "weekIndex": [
+        16
+      ],
+      "classIndexFrom": 1,
+      "classIndexTo": 3,
+      "weekday": 3,
+      "classLocation": "北区  26-0308",
+      "teachers": [
+        "夏浩然"
+      ],
+      "teachingClassName": " 形势与政策-0279",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:64",
+      "weekTime": 3,
+      "totalTime": 9,
+      "point": 2,
+      "classType": 2
+    },
+    {
+      "name": "计算机网络",
+      "weekIndex": [
+        11,
+        12
+      ],
+      "classIndexFrom": 1,
+      "classIndexTo": 3,
+      "weekday": 4,
+      "classLocation": "北区  27-0404",
+      "teachers": [
+        "张明悦",
+        "计外3"
+      ],
+      "teachingClassName": " 计算机网络-0004",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:48,实验:24",
+      "weekTime": 3,
+      "totalTime": 48,
+      "point": 4,
+      "classType": 2
+    },
+    {
+      "name": "学术语言与研究方法II",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "classIndexFrom": 1,
+      "classIndexTo": 2,
+      "weekday": 5,
+      "classLocation": "北区  26-0206",
+      "teachers": [
+        "计英20"
+      ],
+      "teachingClassName": " 学术语言与研究方法II-0002",
+      "teachingClassComposition": " 2023软工(中外合作)03班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:104",
+      "weekTime": 7,
+      "totalTime": 52,
+      "point": 2.5,
+      "classType": 2
+    },
+    {
+      "name": "信息安全原理与应用",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "classIndexFrom": 3,
+      "classIndexTo": 4,
+      "weekday": 5,
+      "classLocation": "北区  26-0308",
+      "teachers": [
+        "赖祥伟"
+      ],
+      "teachingClassName": " 信息安全原理与应用-0004",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:32,实践:24",
+      "weekTime": 2,
+      "totalTime": 32,
+      "point": 3,
+      "classType": 2
+    },
+    {
+      "name": "习近平新时代中国特色社会主义思想概论",
+      "weekIndex": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "classIndexFrom": 5,
+      "classIndexTo": 6,
+      "weekday": 2,
+      "classLocation": "北区  未排地点",
+      "teachers": [
+        "杨阳"
+      ],
+      "teachingClassName": " 习近平新时代中国特色社会主义思想概论-0049A",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工01班;2023软工02班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:40,实践:12",
+      "weekTime": 2,
+      "totalTime": 10,
+      "point": 3,
+      "classType": 1
+    },
+    {
+      "name": "企业级开源框架",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "classIndexFrom": 7,
+      "classIndexTo": 9,
+      "weekday": 1,
+      "classLocation": "北区  25-0608",
+      "teachers": [
+        "任柯"
+      ],
+      "teachingClassName": " 企业级开源框架-0002",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 实践:48",
+      "weekTime": 3,
+      "totalTime": 48,
+      "point": 2,
+      "classType": 1
+    },
+    {
+      "name": "计算机网络",
+      "weekIndex": [
+        14
+      ],
+      "classIndexFrom": 7,
+      "classIndexTo": 9,
+      "weekday": 2,
+      "classLocation": "北区  27-0302",
+      "teachers": [
+        "霍锦玲"
+      ],
+      "teachingClassName": " 形势与政策-0279",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:64",
+      "weekTime": 3,
+      "totalTime": 9,
+      "point": 2,
+      "classType": 2
+    },
+    {
+      "name": "习近平新时代中国特色社会主义思想概论",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "classIndexFrom": 7,
+      "classIndexTo": 9,
+      "weekday": 3,
+      "classLocation": "北区  08-0310",
+      "teachers": [
+        "杨阳"
+      ],
+      "teachingClassName": " 习近平新时代中国特色社会主义思想概论-0049",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工01班;2023软工02班",
+      "examinationType": " 考试",
+      "comment": "  ",
+      "timeComposition": " 讲课:40,实践:12",
+      "weekTime": 3,
+      "totalTime": 42,
+      "point": 3,
+      "classType": 2
+    },
+    {
+      "name": "操作系统原理",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "classIndexFrom": 9,
+      "classIndexTo": 11,
+      "weekday": 4,
+      "classLocation": "北区  26-0510",
+      "teachers": [
+        "黄俊杰"
+      ],
+      "teachingClassName": " 操作系统原理-0006",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:48,实验:24",
+      "weekTime": 3,
+      "totalTime": 48,
+      "point": 4,
+      "classType": 2
+    },
+    {
+      "name": "交互式媒体原理",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "classIndexFrom": 10,
+      "classIndexTo": 11,
+      "weekday": 1,
+      "classLocation": "北区  26-0207",
+      "teachers": [
+        "韩先锋"
+      ],
+      "teachingClassName": " 交互式媒体原理-0002",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:32,实验:24",
+      "weekTime": 2,
+      "totalTime": 32,
+      "point": 3,
+      "classType": 2
+    },
+    {
+      "name": "交互式媒体原理",
+      "weekIndex": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "classIndexFrom": 10,
+      "classIndexTo": 11,
+      "weekday": 2,
+      "classLocation": "北区  25-0702",
+      "teachers": [
+        "韩先锋"
+      ],
+      "teachingClassName": " 交互式媒体原理-0002A",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:32,实验:24",
+      "weekTime": 2,
+      "totalTime": 24,
+      "point": 3,
+      "classType": 1
+    },
+    {
+      "name": "计算机网络",
+      "weekIndex": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "classIndexFrom": 10,
+      "classIndexTo": 11,
+      "weekday": 3,
+      "classLocation": "北区  25-0711",
+      "teachers": [
+        "张明悦"
+      ],
+      "teachingClassName": " 计算机网络-0004A",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:48,实验:24",
+      "weekTime": 2,
+      "totalTime": 24,
+      "point": 4,
+      "classType": 1
+    },
+    {
+      "name": "学术语言与研究方法II",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "classIndexFrom": 12,
+      "classIndexTo": 13,
+      "weekday": 1,
+      "classLocation": "北区  08-0603",
+      "teachers": [
+        "计英24"
+      ],
+      "teachingClassName": " 学术语言与研究方法II-0002",
+      "teachingClassComposition": " 2023软工(中外合作)03班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:104",
+      "weekTime": 7,
+      "totalTime": 52,
+      "point": 2.5,
+      "classType": 2
+    },
+    {
+      "name": "信息安全原理与应用",
+      "weekIndex": [
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "classIndexFrom": 12,
+      "classIndexTo": 13,
+      "weekday": 2,
+      "classLocation": "北区  25-0704",
+      "teachers": [
+        "赖祥伟"
+      ],
+      "teachingClassName": " 信息安全原理与应用-0004A",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:32,实践:24",
+      "weekTime": 3,
+      "totalTime": 24,
+      "point": 3,
+      "classType": 1
+    },
+    {
+      "name": "概率论与数理统计",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16
+      ],
+      "classIndexFrom": 12,
+      "classIndexTo": 14,
+      "weekday": 3,
+      "classLocation": "北区  26-0308",
+      "teachers": [
+        "杨照芳"
+      ],
+      "teachingClassName": " 概率论与数理统计-0004",
+      "teachingClassComposition": " 2023软工(中外合作)03班;2023软工(中外合作)04班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:48",
+      "weekTime": 3,
+      "totalTime": 48,
+      "point": 3,
+      "classType": 2
+    },
+    {
+      "name": "学术语言与研究方法II",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "classIndexFrom": 12,
+      "classIndexTo": 13,
+      "weekday": 4,
+      "classLocation": "北区  26-0307",
+      "teachers": [
+        "计英24"
+      ],
+      "teachingClassName": " 学术语言与研究方法II-0002",
+      "teachingClassComposition": " 2023软工(中外合作)03班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:104",
+      "weekTime": 7,
+      "totalTime": 52,
+      "point": 2.5,
+      "classType": 2
+    },
+    {
+      "name": "学术语言与研究方法II",
+      "weekIndex": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "classIndexFrom": 12,
+      "classIndexTo": 13,
+      "weekday": 5,
+      "classLocation": "北区  26-0511",
+      "teachers": [
+        "计英20"
+      ],
+      "teachingClassName": " 学术语言与研究方法II-0002",
+      "teachingClassComposition": " 2023软工(中外合作)03班",
+      "examinationType": " 未安排",
+      "comment": "  ",
+      "timeComposition": " 讲课:104",
+      "weekTime": 7,
+      "totalTime": 52,
+      "point": 2.5,
+      "classType": 2
+    }
+  ]
+}
