@@ -80,8 +80,7 @@ export function ScheduleImporter() {
                     }
                 })
                 if (isTimeTable) {
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-expect-error
+                    
                     setTimeTable(data as ClassTime[])
                 }
             }
