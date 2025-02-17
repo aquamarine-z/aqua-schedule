@@ -1,6 +1,6 @@
 import {useAtom} from "jotai";
 import {ScheduleInformation} from "@/store/schedule.ts";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import backgroundSvg from "@/assets/background_default_2.png"
 import * as React from "react";
 import {createRoot} from "react-dom/client";
@@ -122,8 +122,9 @@ function showClassInformationDialog(information: {
     classType?: number;
 }) {
     showDialog(<div
-        className={"w-6/8 h-4/8 glass shadow-2xl bg-white rounded-2xl flex flex-col items-center backdrop-blur-xl gap-2 text-black p-2 noScrollBar overflow-y-scroll"}>
-        <h1 className={"text-2xl font-semibold opacity-50 text-center"}>{information.name}</h1>
+        onClick={(e) => {e.stopPropagation()}}
+        className={" w-6/8 h-4/8 glass shadow-2xl bg-white rounded-2xl flex flex-col items-center backdrop-blur-xl gap-2 text-black p-2 noScrollBar overflow-y-scroll"}>
+        <h1 className={"text-2xl font-semibold opacity-50 text-center "}>{information.name}</h1>
         <table className={"w-full table-fixed border-spacing-[8px] border-separate"}>
             <tbody>
                 <tr>
@@ -212,7 +213,7 @@ function showClassInformationDialog(information: {
                         <span>选课附加信息</span>
                     </td>
                     <td className={"text-lg font-semibold opacity-50 text-center"}>
-                        <span>{information.comment?.trim()===""?"无":information.comment}</span>
+                        <span>{information.comment?.trim() === "" ? "无" : information.comment}</span>
                     </td>
                 </tr>
 
@@ -231,9 +232,16 @@ export function ScheduleViewer() {
     startTime.setFullYear(parseInt(schedule.startTime.year))
     const dates = getAllDatesOfTheWeek(startTime, weekIndex)
     const [touchStartPosition, setTouchStartPosition] = useState({x: 0, y: 0})
-    const touchMoveLength = 20
+    const touchMoveLength = 50
     const classTimes = schedule.classTimes
-
+    useEffect(() => {
+        const nowDate = new Date()
+        //如果当前时间在学期开始时间之后，且在学期结束时间之前则自动跳转到当前周
+        if (nowDate > startTime) {
+            const weekIndex = Math.floor((nowDate.getTime() - startTime.getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1
+            setScheduleInformation({...scheduleInformation, viewingWeekIndex: weekIndex})
+        }
+    }, [scheduleInformation.selectedIndex, scheduleInformation.schedules]);
     const moveWeek = (state: "left" | "right") => {
         if (state === "left") {
             if (weekIndex > 1) {
@@ -247,8 +255,9 @@ export function ScheduleViewer() {
         }
     }
     const getClass = (week: number, day: number, classIndex: number) => {
-        let result
+        let result = null
         schedule.schedule.forEach(classInformation => {
+            //console.log(classInformation)
             if (classInformation.weekIndex.includes(week) && day === classInformation.weekday && classInformation.classIndexFrom <= classIndex && classInformation.classIndexTo >= classIndex) {
                 result = classInformation as typeof classInformation
             }
@@ -291,15 +300,15 @@ export function ScheduleViewer() {
                     </thead>
                     <tbody className={"h-full"}>
                         {classTimes.map((classTime, index) => (
-                            <tr key={index} className={"grow "}>
-                                <td className={"flex flex-col items-center justify-around"}>
+                            <tr key={index} className={"grow"}>
+                                <td className={"flex flex-col items-center justify-around h-16 min-h-16 max-h-16"}>
                                     <p className={"text-[12px] select-none text-gray-100 opacity-85 font-semibold"}>{index + 1}</p>
                                     <p className={"text-[12px] select-none text-gray-100 opacity-85"}> {getDisplayTime(classTime.from)}</p>
                                     <p className={"text-[12px] select-none text-gray-100 opacity-85"}>{getDisplayTime(classTime.to)}</p>
                                 </td>
                                 {[1, 2, 3, 4, 5, 6, 7].map((day, dayIndex) => {
                                     const classInformation = getClass(weekIndex, day, index + 1)
-                                    //console.log(classInformation)
+                                    //console.log(weekIndex, day, index + 1)
                                     if (classInformation === null || classInformation === undefined) return <td
                                         key={dayIndex}></td>
                                     if (classInformation.classIndexFrom === index + 1) {
