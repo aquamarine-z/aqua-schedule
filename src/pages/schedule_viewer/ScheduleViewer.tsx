@@ -5,6 +5,7 @@ import backgroundSvg from "@/assets/background_default_2.png"
 import * as React from "react";
 import {createRoot} from "react-dom/client";
 
+
 function formatWeeks(weeks: number[]) {
     if (!Array.isArray(weeks) || weeks.length === 0) {
         return '';
@@ -122,7 +123,9 @@ function showClassInformationDialog(information: {
     classType?: number;
 }) {
     showDialog(<div
-        onClick={(e) => {e.stopPropagation()}}
+        onClick={(e) => {
+            e.stopPropagation()
+        }}
         className={" w-6/8 h-4/8 glass shadow-2xl bg-white rounded-2xl flex flex-col items-center backdrop-blur-xl gap-2 text-black p-2 noScrollBar overflow-y-scroll"}>
         <h1 className={"text-2xl font-semibold opacity-50 text-center "}>{information.name}</h1>
         <table className={"w-full table-fixed border-spacing-[8px] border-separate"}>
@@ -265,42 +268,59 @@ export function ScheduleViewer() {
         return result as unknown as typeof schedule.schedule[0]
     }
     const tableTextStyle = "text-gray-200 opacity-70"
-    return <div className={"relative w-full grow"}>
+    return <div className={"relative w-full h-full"}>
         <img className={"absolute left-0 top-0 w-full h-full -z-10"} src={backgroundSvg} alt={""}></img>
-        <div className={"w-full h-full"}>
-            <div
-                onTouchEnd={(e) => {
-                    const endPositionX = e.changedTouches[0].clientX
-                    const deltaX = endPositionX - touchStartPosition.x
-                    if (deltaX > touchMoveLength) {
-                        moveWeek("left")
-                    }
-                    if (deltaX < -touchMoveLength) {
-                        moveWeek("right")
-                    }
-                }}
-                onTouchStart={(e) => {
-                    setTouchStartPosition({x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY})
-                }} className={"w-full h-full"}>
-                <table className="w-full table-fixed border-spacing-[2px] border-separate">
-                    <thead>
-                        <tr>
-                            <th className={"text-lg font-semibold " + tableTextStyle}>
-                                {dates[0].getMonth()}月
+        <div className={"relative w-full h-full pt-2 pb-2 noScrollBar"}>
+            <table className="w-full table-fixed h-12 border-spacing-[2px] border-separate overflow-y-auto">
+                <thead className={"h-12 sticky"}>
+                    <tr>
+                        <th className={"text-lg font-semibold " + tableTextStyle}>
+                            {dates[0].getMonth()}月
+                        </th>
+                        {dates.map((date, index) => (
+                            <th key={index} className="text-lg font-semibold">
+                                <div className="flex flex-col items-center justify-center+tableTextStyle">
+                                    <span className={"" + tableTextStyle}>{dayChineseName[date.getDay()]}</span>
+                                    <span className={"" + tableTextStyle}>{date.getDate()}</span>
+                                </div>
                             </th>
-                            {dates.map((date, index) => (
-                                <th key={index} className="text-lg font-semibold">
-                                    <div className="flex flex-col items-center justify-center+tableTextStyle">
-                                        <span className={"" + tableTextStyle}>{dayChineseName[date.getDay()]}</span>
-                                        <span className={"" + tableTextStyle}>{date.getDate()}</span>
-                                    </div>
-                                </th>
-                            ))}
+                        ))}
+                    </tr>
+                </thead>
+            </table>
+            <div className={"w-full h-[calc(100vh-theme(spacing.24))] overflow-y-auto"}>
+                <table
+                    
+                    onTouchEnd={(e) => {
+                        const endPositionX = e.changedTouches[0].clientX
+                        const deltaX = endPositionX - touchStartPosition.x
+                        if (deltaX > touchMoveLength) {
+                            moveWeek("left")
+                        }
+                        if (deltaX < -touchMoveLength) {
+                            moveWeek("right")
+                        }
+                    }}
+                    onTouchStart={(e) => {
+                        setTouchStartPosition({x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY})
+                    }}
+                    className="w-full table-fixed h-fit border-spacing-[2px] border-separate mb-8">
+                    <thead className={"h-0"}>
+                        <tr>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
+                            <td/>
                         </tr>
                     </thead>
-                    <tbody className={"h-full"}>
+                    <tbody >
                         {classTimes.map((classTime, index) => (
-                            <tr key={index} className={"grow"}>
+                            <tr key={index} className={""}>
                                 <td className={"flex flex-col items-center justify-around h-16 min-h-16 max-h-16"}>
                                     <p className={"text-[12px] select-none text-gray-100 opacity-85 font-semibold"}>{index + 1}</p>
                                     <p className={"text-[12px] select-none text-gray-100 opacity-85"}> {getDisplayTime(classTime.from)}</p>
@@ -308,12 +328,10 @@ export function ScheduleViewer() {
                                 </td>
                                 {[1, 2, 3, 4, 5, 6, 7].map((day, dayIndex) => {
                                     const classInformation = getClass(weekIndex, day, index + 1)
-                                    //console.log(weekIndex, day, index + 1)
                                     if (classInformation === null || classInformation === undefined) return <td
                                         key={dayIndex}></td>
                                     if (classInformation.classIndexFrom === index + 1) {
                                         return <td key={dayIndex}
-
                                                    onClick={() => {
                                                        showClassInformationDialog(classInformation)
                                                    }}
@@ -331,8 +349,9 @@ export function ScheduleViewer() {
                         ))}
                     </tbody>
                 </table>
-
             </div>
+
+
         </div>
     </div>
 

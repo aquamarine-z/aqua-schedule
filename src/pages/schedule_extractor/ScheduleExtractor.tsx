@@ -20,7 +20,7 @@ import {ScheduleInformation} from "@/store/schedule.ts";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error
-const scheduleMap = new Map<string, ClassTime[]>([['swu', swuSchedule]])
+export const scheduleMap = new Map<string, ClassTime[]>([['swu', swuSchedule]])
 
 export class ScheduleClass {
     name: string = ""
@@ -235,11 +235,11 @@ export function ScheduleExtractor() {
                     setScheduleTime(value)
                 }}>
                     <SelectTrigger className="w-3/4">
-                        <SelectValue placeholder="请选择课程时间信息"/>
+                        <SelectValue placeholder="请选择课程时间表"/>
                     </SelectTrigger>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectLabel>课程时间信息</SelectLabel>
+                            <SelectLabel>课程时间表</SelectLabel>
                             <SelectItem value="swu">西南大学课程日程</SelectItem>
                         </SelectGroup>
                     </SelectContent>
@@ -263,7 +263,7 @@ export function ScheduleExtractor() {
                             )}
                         >
                             <CalendarIcon/>
-                            {date ? date.toLocaleDateString() : <span>Pick a date</span>}
+                            {date ? date.toLocaleDateString() : <span>请选择日期</span>}
                         </Button>
                     </PopoverTrigger>
                     <PopoverContent className="w-auto p-0">

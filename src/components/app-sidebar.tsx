@@ -49,6 +49,11 @@ export function AppSidebar() {
                            <span className={"text-center"}>课程表提取器</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
+                        <SidebarMenuItem>
+                        <SidebarMenuButton isActive={location.pathname==="/schedule_importer"} className={"flex items-center justify-center"} asChild onClick={()=>{navigate("/schedule_importer")}}>
+                           <span className={"text-center"}>课程表导入</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
                 </SidebarMenu>
                 </SidebarGroup>
                 

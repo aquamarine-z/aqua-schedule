@@ -13,12 +13,15 @@ import {
 import {useEffect, useState} from "react";
 import {Schedule} from "@/pages/schedule_extractor/ScheduleExtractor.tsx";
 import defaultSchedule from "@/assets/se3_schedule.json";
+import {Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
+import {Input} from "@/components/ui/input.tsx";
 
 export function AppTitleBar() {
     const location = useLocation()
     const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformation)
     const schedule = scheduleInformation.schedules[scheduleInformation.selectedIndex]
     const [popoverOpen, setPopoverOpen] = useState(false)
+    const [renameName, setRenameName] = useState("")
     useEffect(() => {
         if (scheduleInformation.selectedIndex >= scheduleInformation.schedules.length || scheduleInformation.selectedIndex < 0) {
             setScheduleInformation({...scheduleInformation, selectedIndex: 0})
@@ -34,8 +37,7 @@ export function AppTitleBar() {
                             {new Date().toLocaleDateString()}
                         </span><span
             className={"font-semibold text-md text-gray-500"}>{startDate > new Date() ? "未开学" : "已开学"}</span>
-            <span
-                className={"font-semibold text-md text-gray-500"}>第{scheduleInformation.viewingWeekIndex}周</span>
+            <span className={"font-semibold text-md text-gray-500"}>第{scheduleInformation.viewingWeekIndex}周</span>
             <div className={"grow"}></div>
             <Popover open={popoverOpen} onOpenChange={open => setPopoverOpen(open)}>
                 <PopoverTrigger asChild>
@@ -43,9 +45,47 @@ export function AppTitleBar() {
                         <ArrowUpIcon/> : <MoreHorizontalIcon/>}</Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-60 mr-2 flex items-center flex-col gap-4">
-                    <Button variant={"ghost"}>
-                        <ArrowLeftIcon/>修改课程表名称
-                    </Button>
+                    <Dialog>
+                        <DialogTrigger asChild>
+                            <Button variant="ghost" onClick={() => {
+                                //setPopoverOpen(false)
+                            }}>
+                                <ArrowLeftIcon/>修改课程表名称
+                            </Button>
+                        </DialogTrigger>
+                        <DialogContent
+                            className={"w-3/4 h-3/8 flex flex-col justify-center items-center pb-2 pt-2 gap-10"}>
+                            <DialogHeader>
+                                <DialogTitle>
+                                    <h1>修改课程表名称</h1>
+                                </DialogTitle>
+                            </DialogHeader>
+                            <Input className={"w-9/10"} placeholder={"课程表新名称"} value={renameName} onChange={e => {
+                                setRenameName(e.target.value)
+                            }}>
+
+                            </Input>
+                            <div className={"flex flex-row items-center justify-around w-full gap-2"}>
+                                <DialogClose className={"w-[45%]"}>
+                                    <Button className={"w-full"} variant={"secondary"}>取消</Button>
+                                </DialogClose>
+                                <DialogClose className={"w-[45%]"} onClick={() => {
+                                    if (renameName === "") {
+                                        alert("课程表名称不能为空")
+                                        return
+                                    }
+                                    const newSchedules = [...scheduleInformation.schedules]
+                                    newSchedules[scheduleInformation.selectedIndex].name = renameName
+                                    setScheduleInformation({...scheduleInformation, schedules: newSchedules})
+                                    alert("修改成功")
+                                    setPopoverOpen(false)
+
+                                }}>
+                                    <Button className={"w-full"}>确认</Button>
+                                </DialogClose>
+                            </div>
+                        </DialogContent>
+                    </Dialog>
                     <Button variant="destructive" onClick={() => {
                         if (confirm("确定删除此课程表吗?")) {
                             const newSchedules = scheduleInformation.schedules.filter((_item, index) => index !== scheduleInformation.selectedIndex)
@@ -61,9 +101,9 @@ export function AppTitleBar() {
                         }
 
                     }}><DeleteIcon/>删除此课程表</Button>
-
                 </PopoverContent>
             </Popover>
+
         </>
         }
     </div>
