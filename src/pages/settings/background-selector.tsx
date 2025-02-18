@@ -16,7 +16,7 @@ import {Button} from "@/components/ui/button.tsx";
 import {CirclePlusIcon, RotateCcw, Trash2Icon} from "lucide-react";
 import {DialogContentWithoutClose} from "@/components/ui/dialog-content-without-close.tsx";
 import {DialogClose} from "@radix-ui/react-dialog";
-import {loadImageBase64} from "@/lib/file-utils.ts";
+import {loadImagesBase64} from "@/lib/file-utils.ts";
 import {toast} from "sonner";
 import {Label} from "@/components/ui/label.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
@@ -111,12 +111,12 @@ export function BackgroundSelector() {
             </Dialog>
             }
             <Button onClick={() => {
-                loadImageBase64().then(base64 => {
+                loadImagesBase64().then((base64) => {
                     setSettings({
                         ...settings,
                         backgroundSettings: {
                             ...settings.backgroundSettings,
-                            backgrounds: [...settings.backgroundSettings.backgrounds, base64 as string]
+                            backgrounds: [...settings.backgroundSettings.backgrounds,... base64 as string[]]
                         }
 
                     })
@@ -207,7 +207,7 @@ export function BackgroundSelector() {
                                     ...settings,
                                     backgroundSettings: {
                                         ...settings.backgroundSettings,
-                                        backgroundLastChangeTime: new Date(),
+                                        backgroundLastChangeTime: new Date().getTime(),
                                         backgroundCurrentIndex: currentSelectedBackgroundIndex
                                     }
                                 }
@@ -228,7 +228,7 @@ export function BackgroundSelector() {
                                     ...settings,
                                     backgroundSettings: {
                                         ...settings.backgroundSettings,
-                                        backgroundLastChangeTime: new Date(),
+                                        backgroundLastChangeTime: new Date().getTime(),
                                         backgroundCurrentIndex: nextIndex
                                     }
                                 }

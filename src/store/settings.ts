@@ -32,7 +32,7 @@ export const SettingsStorage = atomWithStorage("settings", {
             backgrounds: [] as string[],
             backgroundChangeMode: "auto-open" as "auto-time"|"auto-open" | "by-user",
             backgroundAutoChangeTime: 60,
-            backgroundLastChangeTime: new Date(),
+            backgroundLastChangeTime: new Date().getTime(),
             backgroundCurrentIndex: 0,
             backgroundSelectMethod: "random" as "random" | "loop",
         },

@@ -54,7 +54,8 @@ export function AppTitleBar() {
         if (firstLoad) return
         //console.log(settings)
         if (settings.backgroundSettings.backgroundChangeMode === "auto-time") {
-            if (new Date().getTime() - settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60 > settings.backgroundSettings.backgroundLastChangeTime.getTime()) {
+            //console.log(settings.backgroundSettings.backgroundLastChangeTime)
+            if (new Date().getTime() - settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60 > settings.backgroundSettings.backgroundLastChangeTime) {
                 setSettings(async prev => {
                     const value = await prev
                     const settings = value
@@ -71,7 +72,7 @@ export function AppTitleBar() {
                         ...value,
                         backgroundSettings: {
                             ...value.backgroundSettings as typeof settings.backgroundSettings,
-                            backgroundLastChangeTime: new Date(),
+                            backgroundLastChangeTime: new Date().getTime(),
                             backgroundCurrentIndex: nextIndex
                         }
                     }
@@ -83,7 +84,7 @@ export function AppTitleBar() {
             // @ts-expect-error
             autoChangeBackground.current = setInterval(() => {
                 if (settings.backgroundSettings.backgroundChangeMode === "auto-time") {
-                    if (new Date().getTime() - settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60 > settings.backgroundSettings.backgroundLastChangeTime.getTime()) {
+                    if (new Date().getTime() - settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60 > settings.backgroundSettings.backgroundLastChangeTime) {
                         setSettings(async prev => {
                             const value = await prev
                             const settings = value
@@ -100,7 +101,7 @@ export function AppTitleBar() {
                                 ...value,
                                 backgroundSettings: {
                                     ...value.backgroundSettings as typeof settings.backgroundSettings,
-                                    backgroundLastChangeTime: new Date(),
+                                    backgroundLastChangeTime: new Date().getTime(),
                                     backgroundCurrentIndex: nextIndex
                                 }
                             }
@@ -128,7 +129,7 @@ export function AppTitleBar() {
                     ...value,
                     backgroundSettings: {
                         ...value.backgroundSettings as typeof settings.backgroundSettings,
-                        backgroundLastChangeTime: new Date(),
+                        backgroundLastChangeTime: new Date().getTime(),
                         backgroundCurrentIndex: nextIndex
                     }
                 }
