@@ -99,6 +99,18 @@ export default {
     "settings.background.toast.import-successfully": "导入成功",
     "settings.background.toast.import-failed": "导入失败",
     "settings.background.toast.remove-successfully": "移除成功",
-    "settings.background.toast.remove-failed": "移除失败"
-
+    "settings.background.toast.remove-failed": "移除失败",
+    "settings.background.change.mode.label": "背景更改模式",
+    "settings.background.change.mode.auto-time": "定时自动更换",
+    "settings.background.change.mode.auto-open": "打开时自动更换",
+    "settings.background.change.mode.by-user": "用户手动更换",
+    "settings.background.select.mode.label": "背景选择模式",
+    "settings.background.select.mode.random": "随机",
+    "settings.background.select.mode.loop": "循环",
+    "settings.background.change-time": "背景更换时间（分钟）",
+    "settings.background.button.change": "更换背景",
+    "settings.background.button.change.toast.message": "背景已更换",
+    "settings.background.button.select": "选择背景",
+    "settings.background.button.select.toast.message": "背景已选择",
+    "settings.background.by-user.button.select": "选择此背景"
 } as unknown as typeof en;
