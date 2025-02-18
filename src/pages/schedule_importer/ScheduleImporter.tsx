@@ -6,15 +6,17 @@ import {cn} from "@/lib/utils.ts";
 import {CalendarIcon} from "lucide-react";
 import {Calendar} from "@/components/ui/calendar.tsx";
 import swuTimeTable from "@/assets/swu_schedule.json";
-import {ClassTime} from "@/pages/schedule_extractor/ScheduleExtractor.tsx";
+
 import {useAtom} from "jotai";
 import {ScheduleInformation} from "@/store/schedule.ts";
+import {ClassTime} from "@/constants/schedule-types.ts";
+import {toast} from "sonner";
 
 export function ScheduleImporter() {
     const [scheduleList, setScheduleList] = useState(null)
     const [startDate, setStartDate] = useState(new Date())
     const [scheduleName, setScheduleName] = useState("")
-    const [timeTable, setTimeTable] = useState(swuTimeTable["classTimes"])
+    const [timeTable, setTimeTable] = useState(swuTimeTable["timeTable"])
     const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformation)
     const getDataFromClipboard = async () => {
         return await navigator.clipboard.readText();
@@ -51,8 +53,8 @@ export function ScheduleImporter() {
     const importData = async (text: string) => {
         try {
             const data = JSON.parse(text)
-            if (data["schedule"]) {
-                setScheduleList(data["schedule"])
+            if (data["classes"]) {
+                setScheduleList(data["classes"])
             }
             if (data["startTime"]) {
                 startDate.setDate(data["startTime"]["dayOfMonth"])
@@ -63,8 +65,8 @@ export function ScheduleImporter() {
             if (data["name"]) {
                 setScheduleName(data["name"])
             }
-            if (data["timetable"]) {
-                setTimeTable(data["classTimes"])
+            if (data["timeTable"]) {
+                setTimeTable(data["timeTable"])
             }
             if (data instanceof Array) {
                 let isTimeTable = true
@@ -140,9 +142,15 @@ export function ScheduleImporter() {
             <Button className={"w-1/2"} variant={"secondary"}
                     onClick={() => getDataFromFile().then(data => importData(data as string))}>从文件导入</Button>
         </div>
-        <Button onClick={() => {
+        <Button 
+            disabled={!scheduleName||scheduleName.trim()===""||!timeTable||timeTable.length===0||!scheduleList}
+            onClick={() => {
             if (scheduleInformation.schedules.map(it => it.name).includes(scheduleName)) {
-                alert("课程表名称重复!")
+                toast(<><span className={"text-red-500"}>课程表名字重复!</span></>)
+                return
+            }
+            if(!scheduleName||scheduleName.trim()==="") {
+                toast(<><span className={"text-red-500"}>课程表名字不能为空!</span></>)
                 return
             }
             const newSchedule = {
@@ -152,9 +160,11 @@ export function ScheduleImporter() {
                     month: (startDate.getMonth() + 1).toString(),
                     dayOfMonth: startDate.getDate().toString()
                 },
-                schedule: scheduleList,
-                classTimes: timeTable
+                classes: scheduleList,
+                timeTable: timeTable,
+                schoolName:"swu"
             }
+            toast("保存成功!")
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-expect-error
             setScheduleInformation({...scheduleInformation, schedules: [...scheduleInformation.schedules, newSchedule]})

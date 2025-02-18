@@ -14,58 +14,18 @@ import {CalendarIcon} from "lucide-react";
 import {useState} from "react";
 import {Calendar} from "@/components/ui/calendar.tsx";
 import {cn} from "@/lib/utils.ts";
-import swuSchedule from "@/assets/swu_schedule.json"
+
 import {useAtom} from "jotai";
 import {ScheduleInformation} from "@/store/schedule.ts";
+import {ExternalInformationSwu, Schedule, ScheduleClass, scheduleMapDefaults} from "@/constants/schedule-types.ts";
+import {toast} from "sonner";
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-export const scheduleMap = new Map<string, ClassTime[]>([['swu', swuSchedule]])
 
-export class ScheduleClass {
-    name: string = ""
-    teachers: string[] = []
-    classIndexFrom: number = 0
-    classIndexTo: number = 0
-    weekIndex: number[] = []
-    weekday: number = 0
-    classLocation: string = ""
-    teachingClassName: string = ""
-    teachingClassComposition: string = ""
-    examinationType: string = ""
-    comment: string = ""
-    timeComposition: string = ""
-    weekTime: number = 0
-    totalTime: number = 0
-    point: number = 0
-    classType: number = 0
-}
-
-export interface ClassTime {
-    from: { hour: number, minute: number }
-    to: { hour: number, minute: number }
-}
-
-export class Schedule {
-    schedule: ScheduleClass[] = []
-    classTimes: ClassTime[] = []
-    startTime: {
-        year: string
-        month: string
-        dayOfMonth: string
-    } = {
-        year: "2025",
-        month: "2",
-        dayOfMonth: "24"
-    }
-    name: string = ""
-}
-
-export function extractSchedule(textContent: string) {
+function extractSchedule(textContent: string) {
     const resultArray: ScheduleClass[] = []
     const domTree = new DOMParser().parseFromString(textContent, "text/html")
     const table = domTree.querySelector("table")
-    
+
     if (table === null) {
         alert("DomTree格式错误")
         return null
@@ -87,7 +47,7 @@ export function extractSchedule(textContent: string) {
             let weekTimeElement: string | null = null
             let totalTimeElement: string | null = null
             let pointElement: string | null = null
-            
+
             let name = classElement.querySelector("span.title font")?.textContent || ""
             let classType: number
             switch (name.charAt(name.length - 1)) {
@@ -146,7 +106,7 @@ export function extractSchedule(textContent: string) {
             const match = timeElement!.match(pattern);
             const classInformation = {
                 name,
-            } as ScheduleClass
+            } as ScheduleClass & ExternalInformationSwu
             if (match) {
                 const classIndexFrom = parseInt(match[1], 10);
                 const classIndexTo = parseInt(match[2], 10);
@@ -164,7 +124,7 @@ export function extractSchedule(textContent: string) {
                 classInformation.classIndexTo = classIndexTo
 
             } else {
-                console.error("字符串格式不匹配");
+                toast(<span className={"text-red-500"}>无法读取此课程表 格式错误</span>)
 
             }
             classInformation.weekday = weekday
@@ -190,10 +150,10 @@ export function ScheduleExtractor() {
     const [date, setDate] = useState<Date>(new Date())
     const [name, setName] = useState<string>("")
     const [scheduleTime, setScheduleTime] = useState<string>("swu")
-    const [scheduleInformation,setScheduleInformation]=useAtom(ScheduleInformation)
+    const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformation)
     const analyze = async () => {
-        if(scheduleInformation.schedules.map(it=>it.name).includes(name)){
-            alert("课程表名称重复!")
+        if (scheduleInformation.schedules.map(it => it.name).includes(name)) {
+            toast(<span className={"text-red-500"}>{"课程表名称重复!"}</span>)
             return
         }
         let textContent = ""
@@ -202,27 +162,33 @@ export function ScheduleExtractor() {
             //console.log('剪贴板的文本内容：', text);
             textContent = text
         } catch (err) {
-            alert('读取剪贴板内容时出错:' + err);
+            toast(<span className={"text-red-500"}>{'读取剪贴板内容时出错:' + err}</span>)
             return
         }
         //从defaultDomTree解析
         const resultArray = extractSchedule(textContent)
         if (!resultArray) {
-            alert("解析异常 请重试")
+            toast(<span className={"text-red-500"}>解析异常 请重试!</span>)
             return
         }
         if (confirm("解析完成 点击确认将其添加到课程表列表吗?")) {
             const schedule = new Schedule()
-            schedule.schedule = resultArray
+            schedule.classes = resultArray
             schedule.name = name
             schedule.startTime = {
                 year: date?.getFullYear().toString() || "2025",
-                month: (date!.getMonth()!+1 || 1).toString(),
+                month: (date!.getMonth()! + 1 || 1).toString(),
                 dayOfMonth: (date?.getDate() || 1).toString()
             }
-            schedule.classTimes = scheduleMap.get("swu")!
-            setScheduleInformation({...scheduleInformation,schedules:[...scheduleInformation.schedules,schedule as Schedule]})
-            alert("添加成功!")
+
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            schedule.timeTable = scheduleMapDefaults.get("swu")!["timeTable"]!
+            setScheduleInformation({
+                ...scheduleInformation,
+                schedules: [...scheduleInformation.schedules, schedule as Schedule]
+            })
+            toast("添加成功!")
         }
     }
     return <div className={"w-full h-full flex items-center justify-center"}>
@@ -270,7 +236,7 @@ export function ScheduleExtractor() {
                         <Calendar
                             mode="single"
                             selected={date}
-                            onSelect={(date)=>setDate(date as Date)}
+                            onSelect={(date) => setDate(date as Date)}
                             initialFocus
                         />
                     </PopoverContent>

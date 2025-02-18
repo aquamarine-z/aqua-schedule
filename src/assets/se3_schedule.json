@@ -5,7 +5,8 @@
     "month": "2",
     "dayOfMonth": "24"
   },
-  "classTimes": [
+  "schoolName": "swu",
+  "timeTable": [
     {
       "from": {
         "hour": 8,
@@ -147,7 +148,7 @@
       }
     }
   ],
-  "schedule": [
+  "classes": [
     {
       "name": "计算机网络",
       "weekIndex": [
