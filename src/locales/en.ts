@@ -29,15 +29,15 @@ export default {
 
     "title-bar.popover.add-class-button": "Add a new class",
     "title-bar.popover.delete-button": "Delete this schedule",
-    
+
     "title-bar.dialog.delete.title": "Delete",
     "title-bar.dialog.delete.message": "Are you sure to delete this schedule?",
     "title-bar.dialog.delete.confirm": "Delete",
     "title-bar.dialog.delete.cancel": "Cancel",
     "title-bar.dialog.delete.toast.delete-successfully": "Delete successfully",
-    
-    "schedule-viewer.month":(month: number)=>{
-        switch(month){
+
+    "schedule-viewer.month": (month: number) => {
+        switch (month) {
             case 1:
                 return "Jan"
             case 2:
@@ -64,8 +64,8 @@ export default {
                 return "Dec"
         }
     },
-    "schedule-viewer.weekday":(weekday: number)=>{
-        switch(weekday){
+    "schedule-viewer.weekday": (weekday: number) => {
+        switch (weekday) {
             case 0:
                 return "Sun"
             case 1:
@@ -82,18 +82,31 @@ export default {
                 return "Sat"
         }
     },
-    "settings.page-title":"Settings",
-    "settings.language.title":"Language",
-    "settings.background.title":"Background Image",
-    "settings.background.no-background":"Not selected yet",
-    "settings.background.import":"Import",
-    "settings.background.remove":"Remove",
-    "settings.background.remove.dialog.title":"Remove Background",
-    "settings.background.remove.dialog.message":"Are you sure to remove the background image?",
-    "settings.background.remove.dialog.confirm":"Confirm",
-    "settings.background.remove.dialog.cancel":"Cancel",
-    "settings.background.toast.import-successfully":"Import successfully",
-    "settings.background.toast.import-failed":"Import failed",
-    "settings.background.toast.remove-successfully":"Remove successfully",
-    "settings.background.toast.remove-failed":"Remove failed",
+    "settings.page-title": "Settings",
+    "settings.language.title": "Language",
+    "settings.background.title": "Background Image",
+    "settings.background.no-background": "Not selected yet",
+    "settings.background.import": "Import",
+    "settings.background.remove": "Remove",
+    "settings.background.remove.dialog.title": "Remove Background",
+    "settings.background.remove.dialog.message": "Are you sure to remove the background image?",
+    "settings.background.remove.dialog.confirm": "Confirm",
+    "settings.background.remove.dialog.cancel": "Cancel",
+    "settings.background.toast.import-successfully": "Import successfully",
+    "settings.background.toast.import-failed": "Import failed",
+    "settings.background.toast.remove-successfully": "Remove successfully",
+    "settings.background.toast.remove-failed": "Remove failed",
+    "settings.background.change.mode.label": "Background Change Mode",
+    "settings.background.change.mode.auto-time": "Auto change with time",
+    "settings.background.change.mode.auto-open": "Auto change when open",
+    "settings.background.change.mode.by-user": "By user",
+    "settings.background.select.mode.label":"Background Select Mode",
+    "settings.background.select.mode.random":"Random",
+    "settings.background.select.mode.loop":"Loop",
+    "settings.background.change-time":"Background Change Time (Minute)",
+    "settings.background.button.change":"Change Background",
+    "settings.background.button.change.toast.message":"Background Changed",
+    "settings.background.button.select":"Select Background",
+    "settings.background.button.select.toast.message":"Background Selected",
+    "settings.background.by-user.button.select":"Select This Background",
 }

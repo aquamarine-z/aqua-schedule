@@ -33,13 +33,8 @@ export async function loadImageBase64() {
     });
 }
 
-// 调用示例
-loadImageBase64().then((base64) => {
-    console.log("图片Base64:", base64);
-}).catch((error) => {
-    console.error("加载失败:", error);
-});
+
 export function isBase64Image(str: string): boolean {
-    return str.startsWith("data:image/");
+    return str?.startsWith("data:image/");
 }
 

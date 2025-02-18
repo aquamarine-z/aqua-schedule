@@ -11,7 +11,7 @@ import {
     MoreHorizontalIcon,
 
 } from "lucide-react";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 import defaultSchedule from "@/assets/se3_schedule.json";
 import {Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
@@ -21,6 +21,8 @@ import {toast} from "sonner";
 import {saveStringToFile} from "@/lib/file-utils.ts";
 import {AddClassDialog} from "@/components/add-class-dialog.tsx";
 import {LanguagePack} from "@/store/language.ts";
+import {SettingsStorage} from "@/store/settings.ts";
+import * as React from "react";
 
 
 export function AppTitleBar() {
@@ -30,16 +32,114 @@ export function AppTitleBar() {
     const [popoverOpen, setPopoverOpen] = useState(false)
     const [renameName, setRenameName] = useState("")
     const language = useAtom(LanguagePack)[0].language
+    const [settings, setSettings] = useAtom(SettingsStorage)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    const autoChangeBackground: React.RefObject<never> = useRef<never>(undefined)
     useEffect(() => {
         if (scheduleInformation.selectedIndex >= scheduleInformation.schedules.length || scheduleInformation.selectedIndex < 0) {
             setScheduleInformation({...scheduleInformation, selectedIndex: 0})
         }
     }, [scheduleInformation.selectedIndex]);
+    const [firstLoad, setFirstLoad] = useState(true)
+    useEffect(() => {
+        const func = async () => {
+            await setSettings(prev => prev)
+            setFirstLoad(false)
+        }
+        func()
+        return () => clearInterval(autoChangeBackground.current)
+    }, []);
+    useEffect(() => {
+        if (firstLoad) return
+        //console.log(settings)
+        if (settings.backgroundSettings.backgroundChangeMode === "auto-time") {
+            if (new Date().getTime() - settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60 > settings.backgroundSettings.backgroundLastChangeTime.getTime()) {
+                setSettings(async prev => {
+                    const value = await prev
+                    const settings = value
+                    let nextIndex = 0
+
+                    const currentSelectedBackgroundIndex = settings.backgroundSettings.backgroundCurrentIndex
+                    if (settings.backgroundSettings.backgroundSelectMethod === "random") {
+                        nextIndex = Math.floor(Math.random() * settings.backgroundSettings.backgrounds.length)
+                    } else if (settings.backgroundSettings.backgroundSelectMethod === "loop") {
+                        if (currentSelectedBackgroundIndex >= settings.backgroundSettings.backgrounds.length - 1) nextIndex = 0
+                        else nextIndex = currentSelectedBackgroundIndex + 1
+                    }
+                    return {
+                        ...value,
+                        backgroundSettings: {
+                            ...value.backgroundSettings as typeof settings.backgroundSettings,
+                            backgroundLastChangeTime: new Date(),
+                            backgroundCurrentIndex: nextIndex
+                        }
+                    }
+                })
+            }
+        }
+        if (!autoChangeBackground.current) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-expect-error
+            autoChangeBackground.current = setInterval(() => {
+                if (settings.backgroundSettings.backgroundChangeMode === "auto-time") {
+                    if (new Date().getTime() - settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60 > settings.backgroundSettings.backgroundLastChangeTime.getTime()) {
+                        setSettings(async prev => {
+                            const value = await prev
+                            const settings = value
+                            let nextIndex = 0
+
+                            const currentSelectedBackgroundIndex = settings.backgroundSettings.backgroundCurrentIndex
+                            if (settings.backgroundSettings.backgroundSelectMethod === "random") {
+                                nextIndex = Math.floor(Math.random() * settings.backgroundSettings.backgrounds.length)
+                            } else if (settings.backgroundSettings.backgroundSelectMethod === "loop") {
+                                if (currentSelectedBackgroundIndex >= settings.backgroundSettings.backgrounds.length - 1) nextIndex = 0
+                                else nextIndex = currentSelectedBackgroundIndex + 1
+                            }
+                            return {
+                                ...value,
+                                backgroundSettings: {
+                                    ...value.backgroundSettings as typeof settings.backgroundSettings,
+                                    backgroundLastChangeTime: new Date(),
+                                    backgroundCurrentIndex: nextIndex
+                                }
+                            }
+                        })
+                    }
+                }
+            }, settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60)
+        }
+        if (settings.backgroundSettings.backgroundChangeMode === "auto-open") {
+            //console.log(1)
+            //console.log(settings.backgroundSettings.backgroundSelectMethod)
+            setSettings(async prev => {
+                const value = await prev
+                const settings = value
+                let nextIndex = 0
+
+                const currentSelectedBackgroundIndex = settings.backgroundSettings.backgroundCurrentIndex
+                if (settings.backgroundSettings.backgroundSelectMethod === "random") {
+                    nextIndex = Math.floor(Math.random() * settings.backgroundSettings.backgrounds.length)
+                } else if (settings.backgroundSettings.backgroundSelectMethod === "loop") {
+                    if (currentSelectedBackgroundIndex >= settings.backgroundSettings.backgrounds.length - 1) nextIndex = 0
+                    else nextIndex = currentSelectedBackgroundIndex + 1
+                }
+                return {
+                    ...value,
+                    backgroundSettings: {
+                        ...value.backgroundSettings as typeof settings.backgroundSettings,
+                        backgroundLastChangeTime: new Date(),
+                        backgroundCurrentIndex: nextIndex
+                    }
+                }
+            })
+
+        }
+    }, [firstLoad]);
     const startDate = new Date()
     startDate.setMonth(parseInt(schedule.startTime.month))
     startDate.setDate(parseInt(schedule.startTime.dayOfMonth))
     startDate.setFullYear(parseInt(schedule.startTime.year))
-    
     return <div className={"h-12 w-full shadow flex flex-row items-center gap-4 pr-4 pl-4"}>
 
         <SidebarTrigger className={"w-12 h-12 p-2 font-serif"}/>

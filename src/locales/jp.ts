@@ -96,6 +96,20 @@ export default {
     "settings.background.toast.import-successfully": "インポート成功",
     "settings.background.toast.import-failed": "インポート失敗",
     "settings.background.toast.remove-successfully": "削除成功",
-    "settings.background.toast.remove-failed": "削除失敗"
+    "settings.background.toast.remove-failed": "削除失敗",
+    "settings.background.change.mode.label": "背景変更モード",
+    "settings.background.change.mode.auto-time": "時間で自動変更",
+    "settings.background.change.mode.auto-open": "開くと自動変更",
+    "settings.background.change.mode.by-user": "ユーザーによる変更",
+    "settings.background.select.mode.label": "背景選択モード",
+    "settings.background.select.mode.random": "ランダム",
+    "settings.background.select.mode.loop": "ループ",
+    "settings.background.change-time": "背景変更時間（分）",
+    "settings.background.button.change": "背景を変更",
+    "settings.background.button.change.toast.message": "背景が変更されました",
+    "settings.background.button.select": "背景を選択",
+    "settings.background.button.select.toast.message": "背景が選択されました",
+    "settings.background.by-user.button.select": "この背景を選択"
+
 
 } as unknown as typeof en;

@@ -71,9 +71,10 @@ export function ScheduleViewer() {
         return result as unknown as typeof schedule.classes[0]
     }
     const tableTextStyle = "text-gray-200/70"
+    const background=settings.backgroundSettings.backgrounds[settings.backgroundSettings.backgroundCurrentIndex]
     return <div className={"relative w-full h-full"}>
         <img className={"absolute left-0 top-0 w-full h-full -z-10"}
-             src={isBase64Image(settings.background) ? settings.background : backgroundSvg} alt={""}></img>
+             src={isBase64Image(background) ? background : backgroundSvg} alt={""}></img>
         <div className={"relative w-full h-full pt-2 pb-2 "}>
             <table className="w-full table-fixed h-12 border-spacing-[2px] border-separate overflow-y-auto">
                 <thead className={"h-12 sticky"}>

@@ -22,7 +22,6 @@ function App() {
     const setLanguage = useAtom(LanguagePack)[1]
     const [settings, setSettings] = useAtom(SettingsStorage)
     useEffect(() => {
-        console.log(settings.language);
         let newLanguage;
         switch (settings.language) {
             case "jp":
@@ -39,7 +38,10 @@ function App() {
 
         // 只有当 `settings.language` 和 `newLanguage.languageName` 不同时才更新 `settings`
         if (settings.language !== newLanguage.languageName) {
-            setSettings({...settings, language: newLanguage.languageName});
+            setSettings(async prev => {
+                const settings = await prev
+                return {...settings, language: newLanguage.languageName}
+            });
         }
     }, [settings.language]);
 
