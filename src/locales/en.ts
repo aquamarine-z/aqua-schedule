@@ -8,7 +8,7 @@ export default {
     "sidebar.group.page-navigator.settings": "Settings",
 
     "title-bar.week-number": (weekNumber: number) => `Week ${weekNumber}`,
-    "title-bar.term-started": (started: boolean) => started ? "Started" : "Not start",
+    "title-bar.term-started": (started: boolean) => started ? "Started" : "Not Start",
 
     "title-bar.popover.rename-button": "Rename this schedule",
     "title-bar.dialog.rename.title": "Rename Schedule",
