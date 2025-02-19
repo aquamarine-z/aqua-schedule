@@ -99,6 +99,7 @@ export default {
     "settings.background.toast.remove-failed": "削除失敗",
     "settings.background.change.mode.label": "背景変更モード",
     "settings.background.change.mode.auto-time": "時間で自動変更",
+    "settings.background.change.mode.auto-switch-view": "スケジュールビューに切り替えると自動変更",
     "settings.background.change.mode.auto-open": "開くと自動変更",
     "settings.background.change.mode.by-user": "ユーザーによる変更",
     "settings.background.select.mode.label": "背景選択モード",

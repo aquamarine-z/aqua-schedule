@@ -22,6 +22,7 @@ export const getCache = ({name, pattern}: any) => ({
 export default defineConfig({
     base:'/aqua-schedule/',
     plugins: [react(), tailwindcss(), VitePWA({
+        registerType:"autoUpdate",
         workbox: {
             globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg}'], //缓存相关静态资源
             runtimeCaching: [

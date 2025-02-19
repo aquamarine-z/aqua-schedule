@@ -3,7 +3,7 @@ import {atomWithStorage} from "jotai/utils";
 
 export type Settings = {
     background: {
-        backgroundChangeMode: "auto-time" | "auto-open" | "by-user",
+        backgroundChangeMode: "auto-time" | "auto-open" | "by-user"|"auto-switch-view",
         backgroundAutoChangeTime: number,
         backgroundLastChangeTime: number,
         backgroundCurrentIndex: number,
@@ -13,7 +13,7 @@ export type Settings = {
 }
 export const SettingsAtom = atomWithStorage("settings", {
         background: {
-            backgroundChangeMode: "auto-open" as "auto-time" | "auto-open" | "by-user",
+            backgroundChangeMode: "auto-switch-view" as "auto-time" | "auto-open" | "by-user"|"auto-switch-view",
             backgroundAutoChangeTime: 60,
             backgroundLastChangeTime: new Date().getTime(),
             backgroundCurrentIndex: 0,

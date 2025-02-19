@@ -8,6 +8,8 @@ import {getAllDatesOfTheWeek} from "@/lib/time-utils.ts";
 import {LanguageAtom} from "@/store/language.ts";
 import {isBase64Image} from "@/lib/file-utils.ts";
 import {useBackgroundSettings} from "@/store/backgrounds.ts";
+import {SettingsAtom} from "@/store/settings.ts";
+
 function getDisplayTime(time: { hour: number, minute: number }) {
     const hour = time.hour
     const minute = time.minute
@@ -19,6 +21,7 @@ export function ScheduleViewer() {
     const schedule = scheduleInformation.schedules[scheduleInformation.selectedIndex]
     const weekIndex = scheduleInformation.viewingWeekIndex
     const startTime = new Date()
+    const [settings,] = useAtom(SettingsAtom)
     //const [settings] = useAtom(SettingsAtom)
     startTime.setMonth(parseInt(schedule.startTime.month))
     startTime.setDate(parseInt(schedule.startTime.dayOfMonth))
@@ -70,14 +73,21 @@ export function ScheduleViewer() {
     }
     const tableTextStyle = "text-gray-200/70"
     const backgroundSettings = useBackgroundSettings()
-    /*useEffect(() => {
-        if (backgroundSettings.backgroundsLoaded) {
-           
-        }
-    }, [backgroundSettings.backgroundsLoaded]);*/
-    if (!backgroundSettings.backgroundsLoaded) return <></>
-    const background=backgroundSettings.nowBackground()
+    useEffect(() => {
+        if (!backgroundSettings.backgroundsLoaded) return
+        if (settings.background.backgroundChangeMode === "auto-switch-view") {
+            backgroundSettings.nextBackground()
+            backgroundSettings.setBackgroundReady(true)
 
+
+        }
+        return () => {
+            backgroundSettings.setBackgroundReady(false)
+        }
+    }, [settings.background.backgroundChangeMode,scheduleInformation.selectedIndex]);
+    if (!backgroundSettings.backgroundReady) return <></>
+
+    const background = backgroundSettings.nowBackground()
     return <div className={"relative w-full h-full"}>
         <img className={"absolute left-0 top-0 w-full h-full -z-10"}
              src={isBase64Image(background) ? background : backgroundSvg} alt={""}></img>
@@ -91,7 +101,6 @@ export function ScheduleViewer() {
                         {dates.map((date, index) => (
                             <th key={index} className="text-lg font-semibold">
                                 <div className="flex flex-col items-center justify-center+tableTextStyle">
-
                                     <span
                                         className={"" + tableTextStyle}>{language['schedule-viewer.weekday'](date.getDay())}</span>
                                     <span className={"" + tableTextStyle}>{date.getDate()}</span>

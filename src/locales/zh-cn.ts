@@ -102,6 +102,7 @@ export default {
     "settings.background.toast.remove-failed": "移除失败",
     "settings.background.change.mode.label": "背景更改模式",
     "settings.background.change.mode.auto-time": "定时自动更换",
+    "settings.background.change.mode.auto-switch-view": "打开课表页时自动切换",
     "settings.background.change.mode.auto-open": "打开时自动更换",
     "settings.background.change.mode.by-user": "用户手动更换",
     "settings.background.select.mode.label": "背景选择模式",

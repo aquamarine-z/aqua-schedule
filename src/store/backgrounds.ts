@@ -31,11 +31,14 @@ export const BackgroundsAtom = atomWithStorage("backgrounds", [] as string[],// 
     // @ts-ignore
     createJSONStorage(() => indexedDBStorage)
 )
-export const backgroundsLoadedAtom = atom(false)
+export const BackgroundStateAtom = atom({
+    loaded: false,
+    ready: false,
+})
 export const useBackgroundSettings = () => {
     const [backgrounds, setBackgrounds] = useAtom(BackgroundsAtom);
     const [settings, setSettings] = useAtom(SettingsAtom)
-    const [backgroundsLoaded, setBackgroundsLoaded] = useAtom(backgroundsLoadedAtom)
+    const [backgroundState, setBackgroundState] = useAtom(BackgroundStateAtom)
     return useMemo(() => ({
         appendBackground: async (background: string) => {
             await setBackgrounds(async prev => {
@@ -50,14 +53,15 @@ export const useBackgroundSettings = () => {
                 return value
             });
         },
-        nowBackground:()=>{
+        nowBackground: () => {
             return backgrounds[settings.background.backgroundCurrentIndex]
         },
         loadBackgrounds: async () => {
             await setBackgrounds(async prev => {
+                //console.log(await prev)
                 return prev;
             })
-            setBackgroundsLoaded(true)
+            setBackgroundState(prev => ({...prev, loaded: true}))
         },
         nextBackground: () => {
             let nextIndex = settings.background.backgroundCurrentIndex
@@ -74,7 +78,7 @@ export const useBackgroundSettings = () => {
                 }
             }))
         },
-        checkChangeBackgroundTime:()=>{
+        checkChangeBackgroundTime: () => {
             return Date.now() - settings.background.backgroundLastChangeTime > settings.background.backgroundAutoChangeTime * 1000 * 60
         },
         setLastSetBackgroundTime: () => {
@@ -86,7 +90,14 @@ export const useBackgroundSettings = () => {
                 }
             }))
         },
-        backgroundsLoaded: backgroundsLoaded
+        backgroundsLoaded: backgroundState.loaded,
+        setBackgroundsLoaded: (l: boolean) => setBackgroundState(prev => {
+            return {...prev, loaded: l}
+        }),
+        backgroundReady: backgroundState.ready,
+        setBackgroundReady: (r: boolean) => setBackgroundState(prev => {
+            return {...prev, ready: r}
+        }),
 
-    }), [setBackgrounds, setSettings, backgrounds, settings, backgroundsLoaded, setBackgroundsLoaded]);
+    }), [backgroundState, setBackgrounds, backgrounds, settings.background.backgroundCurrentIndex, settings.background.backgroundSelectMethod, settings.background.backgroundLastChangeTime, settings.background.backgroundAutoChangeTime, setSettings]);
 };

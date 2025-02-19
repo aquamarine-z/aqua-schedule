@@ -99,6 +99,7 @@ export default {
     "settings.background.change.mode.label": "Background Change Mode",
     "settings.background.change.mode.auto-time": "Auto change with time",
     "settings.background.change.mode.auto-open": "Auto change when open",
+    "settings.background.change.mode.auto-switch-view": "Auto change when switch to schedule view",
     "settings.background.change.mode.by-user": "By user",
     "settings.background.select.mode.label":"Background Select Mode",
     "settings.background.select.mode.random":"Random",

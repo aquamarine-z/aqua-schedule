@@ -1,6 +1,6 @@
-import enLanguage from "@/locales/en.ts"
 import {atom} from "jotai";
+import zhCn from "@/locales/zh-cn.ts";
 export const LanguageAtom = atom({
-    language: enLanguage,
-    languageName: "en"
+    language: zhCn,
+    languageName: "zh-cn"
 })

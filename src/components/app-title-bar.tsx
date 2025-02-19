@@ -6,11 +6,14 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover.t
 import {Button} from "@/components/ui/button.tsx";
 import {
     ArrowDownToLine,
-    ArrowUpIcon, CircleArrowUpIcon, ClipboardIcon, ClipboardPen,
+    ArrowUpIcon,
+    CircleArrowUpIcon,
+    ClipboardIcon,
+    ClipboardPen,
     DeleteIcon,
     MoreHorizontalIcon,
-
 } from "lucide-react";
+import * as React from "react";
 import {useEffect, useRef, useState} from "react";
 
 import defaultSchedule from "@/assets/se3_schedule.json";
@@ -22,7 +25,6 @@ import {saveStringToFile} from "@/lib/file-utils.ts";
 import {AddClassDialog} from "@/components/add-class-dialog.tsx";
 import {LanguageAtom} from "@/store/language.ts";
 import {SettingsAtom} from "@/store/settings.ts";
-import * as React from "react";
 import {useBackgroundSettings} from "@/store/backgrounds.ts";
 
 
@@ -33,7 +35,7 @@ export function AppTitleBar() {
     const [popoverOpen, setPopoverOpen] = useState(false)
     const [renameName, setRenameName] = useState("")
     const language = useAtom(LanguageAtom)[0].language
-    const [settings, ] = useAtom(SettingsAtom)
+    const [settings,] = useAtom(SettingsAtom)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error
     const autoChangeBackground: React.RefObject<never> = useRef<never>(undefined)
@@ -44,15 +46,19 @@ export function AppTitleBar() {
     }, [scheduleInformation.selectedIndex]);
     const backgroundSettings = useBackgroundSettings()
     useEffect(() => {
-        backgroundSettings.loadBackgrounds()
+        const loadBackground = async () => {
+            await backgroundSettings.loadBackgrounds()
+        }
+        loadBackground()
+
     }, []);
     useEffect(() => {
-    }, [backgroundSettings.backgroundsLoaded]);
-    useEffect(() => {
-        if (settings.background.backgroundChangeMode === "auto-open") {
+        if (!backgroundSettings.backgroundsLoaded) return
+        if (settings.background.backgroundChangeMode === "auto-open" || settings.background.backgroundChangeMode === "auto-switch-view") {
             backgroundSettings.nextBackground()
             backgroundSettings.setLastSetBackgroundTime()
-        } else if (settings.background.backgroundChangeMode === "auto-time") {
+        }
+        if (settings.background.backgroundChangeMode === "auto-time") {
             if (!autoChangeBackground.current) {
                 if (backgroundSettings.checkChangeBackgroundTime()) {
                     backgroundSettings.nextBackground()
@@ -64,12 +70,13 @@ export function AppTitleBar() {
                     if (backgroundSettings.checkChangeBackgroundTime()) {
                         backgroundSettings.nextBackground()
                         backgroundSettings.setLastSetBackgroundTime()
-                        console.log(1)
                     }
                 }, settings.background.backgroundAutoChangeTime * 60 * 1000 + 1000)
             }
         }
-        return ()=>{
+        //console.log(1)
+        backgroundSettings.setBackgroundReady(true)
+        return () => {
             if (autoChangeBackground.current) {
                 clearInterval(autoChangeBackground.current)
                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -77,7 +84,7 @@ export function AppTitleBar() {
                 autoChangeBackground.current = undefined
             }
         }
-    }, [ settings.background.backgroundAutoChangeTime, settings.background.backgroundChangeMode]);
+    }, [settings.background.backgroundAutoChangeTime, backgroundSettings.backgroundsLoaded, settings.background.backgroundChangeMode]);
     const startDate = new Date()
     startDate.setMonth(parseInt(schedule.startTime.month))
     startDate.setDate(parseInt(schedule.startTime.dayOfMonth))
