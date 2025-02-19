@@ -20,11 +20,14 @@ export const getCache = ({name, pattern}: any) => ({
 })
 
 export default defineConfig({
-    base:'/aqua-schedule/',
+    base: '/aqua-schedule/',
     plugins: [react(), tailwindcss(), VitePWA({
-        registerType:"autoUpdate",
+        registerType: "prompt",
         workbox: {
+            clientsClaim: true,
+            skipWaiting: true, // 让新的 Service Worker 立即生效
             globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg}'], //缓存相关静态资源
+
             runtimeCaching: [
                 // 配置自定义运行时缓存
             ]
@@ -32,7 +35,7 @@ export default defineConfig({
         manifest: {
             "name": 'Aqua Schedule',
             "description": "西南大学的课程表查看工具PWA",
-            "theme_color": "#c7aefa",
+            "theme_color": "#b6e3ff",
             shortcuts: [ // 配置快捷方式，指定打开页面地址
                 {
                     name: "Aqua Schedule", // 快捷方式名称

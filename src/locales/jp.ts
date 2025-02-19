@@ -110,7 +110,15 @@ export default {
     "settings.background.button.change.toast.message": "背景が変更されました",
     "settings.background.button.select": "背景を選択",
     "settings.background.button.select.toast.message": "背景が選択されました",
-    "settings.background.by-user.button.select": "この背景を選択"
+    "settings.background.by-user.button.select": "この背景を選択",
 
+    "update-checker.message": "新しいバージョンが利用可能です。",
+    "update-checker.button": "更新",
+    "update-checker.dialog.title": "バージョン更新",
+    "update-checker.dialog.message": "新しいバージョンに更新して、アプリケーションを再起動してもよろしいですか？",
+    "update-checker.dialog.confirm": "確認",
+    "update-checker.dialog.cancel": "キャンセル",
+
+    "offline-downloader.offline-mode.toast.message": "このPWAアプリはダウンロードされ、ネットワークなしで実行できます。"
 
 } as unknown as typeof en;

@@ -16,6 +16,8 @@ import jp from "@/locales/jp.ts";
 import zhCn from "@/locales/zh-cn.ts";
 import en from "@/locales/en.ts";
 import {LanguageAtom} from "@/store/language.ts";
+import {UpdateChecker} from "@/components/update-checker.tsx";
+import {OfflineDownloader} from "@/components/offline-downloader.tsx";
 
 
 function App() {
@@ -50,6 +52,8 @@ function App() {
                     <div className={"flex flex-col w-full h-full overflow-y-hidden gap-0"}>
                         <AppTitleBar/>
                         <Toaster/>
+                        <UpdateChecker/>
+                        <OfflineDownloader/>
                         <div
                             className={"pt-0 grow w-full relative h-[calc(100vh-theme(spacing.12))]"}>
                             <Routes>
@@ -60,9 +64,7 @@ function App() {
                                 <Route path={"/settings"} element={<Settings/>}/>
                             </Routes>
                         </div>
-
                     </div>
-
                 </main>
             </BrowserRouter>
         </SidebarProvider>

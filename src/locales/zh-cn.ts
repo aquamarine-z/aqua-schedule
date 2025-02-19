@@ -113,5 +113,14 @@ export default {
     "settings.background.button.change.toast.message": "背景已更换",
     "settings.background.button.select": "选择背景",
     "settings.background.button.select.toast.message": "背景已选择",
-    "settings.background.by-user.button.select": "选择此背景"
+    "settings.background.by-user.button.select": "选择此背景",
+
+    "update-checker.message": "新版本可用。",
+    "update-checker.button": "更新",
+    "update-checker.dialog.title": "版本更新",
+    "update-checker.dialog.message": "确定要更新到新版本并重新启动应用吗？",
+    "update-checker.dialog.confirm": "确认",
+    "update-checker.dialog.cancel": "取消",
+
+    "offline-downloader.offline-mode.toast.message": "此 PWA 应用已下载，可在无网络情况下运行。"
 } as unknown as typeof en;

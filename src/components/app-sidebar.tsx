@@ -1,8 +1,13 @@
 import {
     Sidebar,
     SidebarContent,
-    SidebarFooter, SidebarGroup, SidebarGroupLabel,
-    SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem,
+    SidebarFooter,
+    SidebarGroup,
+    SidebarGroupLabel,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAtom} from "jotai";
@@ -11,13 +16,15 @@ import {Button} from "@/components/ui/button.tsx";
 import {Moon, Sun} from "lucide-react";
 import {useTheme} from "@/components/ui/theme-provider.tsx";
 import {LanguageAtom} from "@/store/language.ts";
+import {ApplicationInformationAtom} from "@/store/application-information.ts";
 
 export function AppSidebar() {
     const location = useLocation()
     const navigate = useNavigate()
     const [schedule, setSchedule] = useAtom(ScheduleInformationAtom)
-    const theme=useTheme()
-    const language=useAtom(LanguageAtom)[0].language
+    const theme = useTheme()
+    const language = useAtom(LanguageAtom)[0].language
+    const [applicationInformation] = useAtom(ApplicationInformationAtom)
     return (
         <Sidebar>
             <SidebarHeader className={"flex items-center border-b-sidebar-border border-b-[1px]"}>
@@ -51,7 +58,8 @@ export function AppSidebar() {
                                                className={"flex items-center justify-center"} asChild onClick={() => {
                                 navigate("/main")
                             }}>
-                                <span className={"text-center text-2xl"}>{language["sidebar.group.page-navigator.main-page"]}</span>
+                                <span
+                                    className={"text-center text-2xl"}>{language["sidebar.group.page-navigator.main-page"]}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
@@ -59,7 +67,8 @@ export function AppSidebar() {
                                                className={"flex items-center justify-center"} asChild onClick={() => {
                                 navigate("/schedule_extractor")
                             }}>
-                                <span className={"text-center"}>{language["sidebar.group.page-navigator.extractor"]}</span>
+                                <span
+                                    className={"text-center"}>{language["sidebar.group.page-navigator.extractor"]}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
@@ -67,7 +76,8 @@ export function AppSidebar() {
                                                className={"flex items-center justify-center"} asChild onClick={() => {
                                 navigate("/schedule_importer")
                             }}>
-                                <span className={"text-center"}>{language["sidebar.group.page-navigator.importer"]}</span>
+                                <span
+                                    className={"text-center"}>{language["sidebar.group.page-navigator.importer"]}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                         <SidebarMenuItem>
@@ -75,7 +85,8 @@ export function AppSidebar() {
                                                className={"flex items-center justify-center"} asChild onClick={() => {
                                 navigate("/settings")
                             }}>
-                                <span className={"text-center"}>{language["sidebar.group.page-navigator.settings"]}</span>
+                                <span
+                                    className={"text-center"}>{language["sidebar.group.page-navigator.settings"]}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     </SidebarMenu>
@@ -83,16 +94,21 @@ export function AppSidebar() {
 
             </SidebarContent>
             <SidebarFooter>
-                <Button variant="outline" size="icon" onClick={()=>{
-                    if(theme.theme==="dark") theme.setTheme("light")
-                    if(theme.theme==="light") theme.setTheme("dark")
-                }}>
-                    <Sun
-                        className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"/>
-                    <Moon
-                        className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"/>
-                    <span className="sr-only">Toggle theme</span>
-                </Button>
+                <div className={"w-full flex flex-row pl-4 pr-4 items-center"}>
+                    <span>{applicationInformation.versionCode} {applicationInformation.versionName}</span>
+                    <div className={"grow"}/>
+                    <Button variant="outline" size="icon" onClick={() => {
+                        if (theme.theme === "dark") theme.setTheme("light")
+                        if (theme.theme === "light") theme.setTheme("dark")
+                    }}>
+                        <Sun
+                            className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"/>
+                        <Moon
+                            className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"/>
+                        <span className="sr-only">Toggle theme</span>
+                    </Button>
+                </div>
+
             </SidebarFooter>
         </Sidebar>
     )
