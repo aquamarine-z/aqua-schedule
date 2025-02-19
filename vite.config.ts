@@ -24,7 +24,7 @@ export default defineConfig({
     plugins: [react(), tailwindcss(), VitePWA({
         registerType: "prompt",
         workbox: {
-            clientsClaim: true,
+            clientsClaim: false,
             skipWaiting: false, // 让新的 Service Worker 立即生效
             globPatterns: ['**/*.{js,css,html,ico,png,jpg,svg}'], //缓存相关静态资源
 
