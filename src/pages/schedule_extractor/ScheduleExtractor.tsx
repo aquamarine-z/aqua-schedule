@@ -16,7 +16,7 @@ import {Calendar} from "@/components/ui/calendar.tsx";
 import {cn} from "@/lib/utils.ts";
 
 import {useAtom} from "jotai";
-import {ScheduleInformation} from "@/store/schedule.ts";
+import {ScheduleInformationAtom} from "@/store/schedule.ts";
 import {ExternalInformationSwu, Schedule, ScheduleClass, scheduleMapDefaults} from "@/constants/schedule-types.ts";
 import {toast} from "sonner";
 
@@ -150,7 +150,7 @@ export function ScheduleExtractor() {
     const [date, setDate] = useState<Date>(new Date())
     const [name, setName] = useState<string>("")
     const [scheduleTime, setScheduleTime] = useState<string>("swu")
-    const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformation)
+    const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformationAtom)
     const analyze = async () => {
         if (scheduleInformation.schedules.map(it => it.name).includes(name)) {
             toast(<span className={"text-red-500"}>{"课程表名称重复!"}</span>)

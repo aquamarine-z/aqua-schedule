@@ -6,18 +6,18 @@ import {
 } from "@/components/ui/sidebar"
 import {useLocation, useNavigate} from "react-router-dom";
 import {useAtom} from "jotai";
-import {ScheduleInformation} from "@/store/schedule.ts";
+import {ScheduleInformationAtom} from "@/store/schedule.ts";
 import {Button} from "@/components/ui/button.tsx";
 import {Moon, Sun} from "lucide-react";
 import {useTheme} from "@/components/ui/theme-provider.tsx";
-import {LanguagePack} from "@/store/language.ts";
+import {LanguageAtom} from "@/store/language.ts";
 
 export function AppSidebar() {
     const location = useLocation()
     const navigate = useNavigate()
-    const [schedule, setSchedule] = useAtom(ScheduleInformation)
+    const [schedule, setSchedule] = useAtom(ScheduleInformationAtom)
     const theme=useTheme()
-    const language=useAtom(LanguagePack)[0].language
+    const language=useAtom(LanguageAtom)[0].language
     return (
         <Sidebar>
             <SidebarHeader className={"flex items-center border-b-sidebar-border border-b-[1px]"}>

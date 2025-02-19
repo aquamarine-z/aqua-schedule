@@ -7,12 +7,12 @@ import {
 } from "@/components/ui/dialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {CirclePlusIcon} from "lucide-react";
-import {LanguagePack} from "@/store/language.ts";
+import {LanguageAtom} from "@/store/language.ts";
 import {useAtom} from "jotai";
 
 
 export function AddClassDialog() {
-    const language=useAtom(LanguagePack)[0].language
+    const language=useAtom(LanguageAtom)[0].language
     return <Dialog>
         <DialogTrigger asChild className={"w-full"}>
             <Button variant={"ghost"} className={"w-7/8"}>

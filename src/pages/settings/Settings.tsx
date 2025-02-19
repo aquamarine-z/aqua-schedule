@@ -1,13 +1,13 @@
-import {LanguagePack} from "@/store/language.ts";
+import {LanguageAtom} from "@/store/language.ts";
 import {useAtom} from "jotai";
 import {Select, SelectContent, SelectGroup, SelectItem, SelectTrigger} from "@/components/ui/select.tsx";
 import {SelectValue} from "@radix-ui/react-select";
-import {SettingsStorage} from "@/store/settings.ts";
+import {SettingsAtom} from "@/store/settings.ts";
 import {BackgroundSelector} from "@/pages/settings/background-selector.tsx";
 
 export function Settings() {
-    const language = useAtom(LanguagePack)[0].language
-    const [settings, setSettings] = useAtom(SettingsStorage)
+    const language = useAtom(LanguageAtom)[0].language
+    const [settings, setSettings] = useAtom(SettingsAtom)
     
     return <div
         className={"w-full h-full overflow-y-scroll noScrollBar flex flex-col gap-8 pt-10 pb-10 pr-10 pl-10 items-center justify-start"}>
@@ -15,11 +15,9 @@ export function Settings() {
         <div className={"w-full flex flex-row gap-4 items-center"}>
             <span className={"text-primary font-bold text-lg min-w-fit"}> {language['settings.language.title']}</span>
             <Select defaultValue={settings.language} value={settings.language} onValueChange={(value) => {
-                setSettings(async prev => {
-                    const settings = await prev
-                    return {...settings, language: value}
+                setSettings(prev => {
+                    return {...(prev), language: value as 'jp' | 'zh-cn' | 'en'}
                 }
-                
             )
             }}>
                 <SelectTrigger className="grow">

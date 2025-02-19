@@ -1,15 +1,13 @@
 import {useAtom} from "jotai";
-import {ScheduleInformation} from "@/store/schedule.ts";
+import {ScheduleInformationAtom} from "@/store/schedule.ts";
 import {useEffect, useState} from "react";
 import backgroundSvg from "@/assets/background_default_2.png"
 import {ClassInformationDisplay} from "@/pages/schedule_viewer/ClassInformationDisplay.tsx";
 import {ScheduleClass, scheduleMapDefaults} from "@/constants/schedule-types.ts";
 import {getAllDatesOfTheWeek} from "@/lib/time-utils.ts";
-import {LanguagePack} from "@/store/language.ts";
+import {LanguageAtom} from "@/store/language.ts";
 import {isBase64Image} from "@/lib/file-utils.ts";
-import {SettingsStorage} from "@/store/settings.ts";
-
-
+import {useBackgroundSettings} from "@/store/backgrounds.ts";
 function getDisplayTime(time: { hour: number, minute: number }) {
     const hour = time.hour
     const minute = time.minute
@@ -17,11 +15,11 @@ function getDisplayTime(time: { hour: number, minute: number }) {
 }
 
 export function ScheduleViewer() {
-    const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformation)
+    const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformationAtom)
     const schedule = scheduleInformation.schedules[scheduleInformation.selectedIndex]
     const weekIndex = scheduleInformation.viewingWeekIndex
     const startTime = new Date()
-    const [settings] = useAtom(SettingsStorage)
+    //const [settings] = useAtom(SettingsAtom)
     startTime.setMonth(parseInt(schedule.startTime.month))
     startTime.setDate(parseInt(schedule.startTime.dayOfMonth))
     startTime.setFullYear(parseInt(schedule.startTime.year))
@@ -29,16 +27,16 @@ export function ScheduleViewer() {
     const [touchStartPosition, setTouchStartPosition] = useState({x: 0, y: 0})
     const touchMoveLength = 50
     let timeTable = schedule.timeTable
-    if(!timeTable||!Array.isArray(timeTable)){
+    if (!timeTable || !Array.isArray(timeTable)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
-        timeTable=scheduleMapDefaults["swu"]!['timeTable']
+        timeTable = scheduleMapDefaults["swu"]!['timeTable']
     }
     const classesInThisWeek = schedule.classes?.filter(classInformation => {
         return classInformation.weekIndex.includes(weekIndex)
     })
-    
-    const language = useAtom(LanguagePack)[0].language
+
+    const language = useAtom(LanguageAtom)[0].language
     useEffect(() => {
         const nowDate = new Date()
         //如果当前时间在学期开始时间之后，且在学期结束时间之前则自动跳转到当前周
@@ -71,7 +69,15 @@ export function ScheduleViewer() {
         return result as unknown as typeof schedule.classes[0]
     }
     const tableTextStyle = "text-gray-200/70"
-    const background=settings.backgroundSettings.backgrounds[settings.backgroundSettings.backgroundCurrentIndex]
+    const backgroundSettings = useBackgroundSettings()
+    /*useEffect(() => {
+        if (backgroundSettings.backgroundsLoaded) {
+           
+        }
+    }, [backgroundSettings.backgroundsLoaded]);*/
+    if (!backgroundSettings.backgroundsLoaded) return <></>
+    const background=backgroundSettings.nowBackground()
+
     return <div className={"relative w-full h-full"}>
         <img className={"absolute left-0 top-0 w-full h-full -z-10"}
              src={isBase64Image(background) ? background : backgroundSvg} alt={""}></img>

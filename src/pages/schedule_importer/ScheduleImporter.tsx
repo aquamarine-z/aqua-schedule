@@ -8,7 +8,7 @@ import {Calendar} from "@/components/ui/calendar.tsx";
 import swuTimeTable from "@/assets/swu_schedule.json";
 
 import {useAtom} from "jotai";
-import {ScheduleInformation} from "@/store/schedule.ts";
+import {ScheduleInformationAtom} from "@/store/schedule.ts";
 import {ClassTime} from "@/constants/schedule-types.ts";
 import {toast} from "sonner";
 
@@ -17,7 +17,7 @@ export function ScheduleImporter() {
     const [startDate, setStartDate] = useState(new Date())
     const [scheduleName, setScheduleName] = useState("")
     const [timeTable, setTimeTable] = useState(swuTimeTable["timeTable"])
-    const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformation)
+    const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformationAtom)
     const getDataFromClipboard = async () => {
         return await navigator.clipboard.readText();
 

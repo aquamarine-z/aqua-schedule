@@ -1,6 +1,6 @@
 import {useAtom} from "jotai/index";
-import {LanguagePack} from "@/store/language.ts";
-import {SettingsStorage} from "@/store/settings.ts";
+import {LanguageAtom} from "@/store/language.ts";
+import {SettingsAtom} from "@/store/settings.ts";
 import * as React from "react";
 import {
     Carousel,
@@ -21,12 +21,15 @@ import {toast} from "sonner";
 import {Label} from "@/components/ui/label.tsx";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select.tsx";
 import {Input} from "@/components/ui/input.tsx";
+import {BackgroundsAtom, useBackgroundSettings} from "@/store/backgrounds.ts";
 
 
 export function BackgroundSelector() {
-    const language = useAtom(LanguagePack)[0].language
-    const [settings, setSettings] = useAtom(SettingsStorage)
+    const language = useAtom(LanguageAtom)[0].language
+    const [settings, setSettings] = useAtom(SettingsAtom)
     const [api, setApi] = React.useState<CarouselApi>()
+    const backgroundSettings = useBackgroundSettings()
+    const [backgrounds,setBackgrounds]=useAtom(BackgroundsAtom)
     const [currentSelectedBackgroundIndex, setCurrentSelectedBackgroundIndex] = React.useState<number>(settings.backgroundSettings.backgroundCurrentIndex)
     useEffect(() => {
         if (!api) {
@@ -50,14 +53,14 @@ export function BackgroundSelector() {
         </h1>
         <Carousel opts={{}} setApi={setApi}>
             <CarouselContent>
-                {settings.backgroundSettings.backgrounds.length === 0 ?
+                {backgrounds.length === 0 ?
                     <CarouselItem>
                         <div
                             className={"w-[75vw] h-[55vh] object-cover rounded-2xl border-black border-2 flex items-center justify-center"}>
                             <h1>{language["settings.background.no-background"]}</h1>
                         </div>
                     </CarouselItem>
-                    : settings.backgroundSettings.backgrounds.map((it, index) => {
+                    : backgrounds.map((it, index) => {
                         return <CarouselItem key={index}>
                             <img className={"w-[75vw] h-[55vh] object-cover rounded-2xl border-black border-2"}
                                  src={it} alt={""}/>
@@ -68,7 +71,7 @@ export function BackgroundSelector() {
             <CarouselNext/>
         </Carousel>
         <div className={"w-full flex flex-row gap-4 items-center justify-around"}>
-            {settings.backgroundSettings.backgrounds.length === 0 || <Dialog>
+            {backgrounds.length === 0 || <Dialog>
                 <DialogTrigger>
                     <Button variant={"destructive"}><Trash2Icon/>{language['settings.background.remove']}</Button>
                 </DialogTrigger>
@@ -87,16 +90,9 @@ export function BackgroundSelector() {
                                 variant={"secondary"}>{language['settings.background.remove.dialog.cancel']}</Button>
                         </DialogClose>
                         <DialogClose>
-                            <Button onClick={() => {
-                                const newBackgrounds = [...settings.backgroundSettings.backgrounds.filter((_, i) => {
-                                    return i !== currentSelectedBackgroundIndex
-                                })]
-                                setSettings({
-                                    ...settings, backgroundSettings: {
-                                        ...settings.backgroundSettings,
-                                        backgrounds: newBackgrounds
-                                    }
-                                })
+                            <Button onClick={async () => {
+                                const newBackgrounds = backgrounds.filter((_, index) => index !== currentSelectedBackgroundIndex)
+                                await setBackgrounds(newBackgrounds)
                                 if (newBackgrounds.length === 0) {
                                     setCurrentSelectedBackgroundIndex(-1)
                                 }
@@ -110,27 +106,22 @@ export function BackgroundSelector() {
                 </DialogContentWithoutClose>
             </Dialog>
             }
-            <Button onClick={() => {
+            <Button onClick={async () => {
                 loadImagesBase64().then((base64) => {
-                    setSettings({
-                        ...settings,
-                        backgroundSettings: {
-                            ...settings.backgroundSettings,
-                            backgrounds: [...settings.backgroundSettings.backgrounds,... base64 as string[]]
-                        }
-
+                    (base64 as string[]).forEach(async(it)=>{
+                        await backgroundSettings.appendBackground(it)
                     })
                     toast(language['settings.background.toast.import-successfully'])
                 })
             }}><CirclePlusIcon/>{language['settings.background.import']}</Button>
         </div>
         {
-            settings.backgroundSettings.backgrounds.length > 0 &&
+            backgrounds.length > 0 &&
             <div className={"w-full flex flex-col gap-1 items-start"}>
                 <Label>{language['settings.background.change.mode.label']}</Label>
                 <Select value={settings.backgroundSettings.backgroundChangeMode} onValueChange={v => {
-                    setSettings(async prev => {
-                        const settings = await prev
+                    setSettings(prev => {
+                        const settings =  prev
                         return {
                             ...settings,
                             backgroundSettings: {
@@ -158,8 +149,8 @@ export function BackgroundSelector() {
                             {language["settings.background.select.mode.label"]}
                         </Label>
                         <Select value={settings.backgroundSettings.backgroundSelectMethod} onValueChange={v => {
-                            setSettings(async prev => {
-                                const settings = await prev
+                            setSettings(prev => {
+                                const settings =prev
                                 return {
                                     ...settings,
                                     backgroundSettings: {
@@ -186,8 +177,8 @@ export function BackgroundSelector() {
                                        onChange={v => {
                                            const value = parseInt(v.target.value)
                                            if (value.toString(10) !== "" && value > 0) {
-                                               setSettings(async prev => {
-                                                   const settings = await prev
+                                               setSettings(prev => {
+                                                   const settings = prev
                                                    return {
                                                        ...settings,
                                                        backgroundSettings: {
@@ -201,8 +192,8 @@ export function BackgroundSelector() {
                             </>
                         }
                         <Button className={"w-full"} variant={"secondary"} onClick={() => {
-                            setSettings(async prev => {
-                                const settings = await prev
+                            setSettings(prev => {
+                                const settings = prev
                                 return {
                                     ...settings,
                                     backgroundSettings: {
@@ -217,13 +208,13 @@ export function BackgroundSelector() {
                         <Button className={"w-full"} variant={'secondary'} onClick={() => {
                             let nextIndex = 0
                             if (settings.backgroundSettings.backgroundSelectMethod === "random") {
-                                nextIndex = Math.floor(Math.random() * settings.backgroundSettings.backgrounds.length)
+                                nextIndex = Math.floor(Math.random() * backgrounds.length)
                             } else if (settings.backgroundSettings.backgroundSelectMethod === "loop") {
-                                if (currentSelectedBackgroundIndex === settings.backgroundSettings.backgrounds.length - 1) nextIndex = 0
+                                if (currentSelectedBackgroundIndex === backgrounds.length - 1) nextIndex = 0
                                 else nextIndex = currentSelectedBackgroundIndex + 1
                             }
-                            setSettings(async prev => {
-                                const settings = await prev
+                            setSettings(prev => {
+                                const settings = prev
                                 return {
                                     ...settings,
                                     backgroundSettings: {
@@ -242,8 +233,8 @@ export function BackgroundSelector() {
                 {
                     settings.backgroundSettings.backgroundChangeMode === "by-user" && <>
                         <Button className={"w-full"} onClick={() => {
-                            setSettings(async prev => {
-                                const settings = await prev
+                            setSettings(prev => {
+                                const settings = prev
                                 return {
                                     ...settings,
                                     backgroundSettings: {

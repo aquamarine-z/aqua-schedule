@@ -9,18 +9,18 @@ import {ScheduleImporter} from "@/pages/schedule_importer/ScheduleImporter.tsx";
 import {Toaster} from "sonner";
 import {ThemeProvider} from "@/components/ui/theme-provider.tsx";
 import {Settings} from "@/pages/settings/Settings.tsx";
-import {SettingsStorage} from "@/store/settings.ts";
+import {SettingsAtom} from "@/store/settings.ts";
 import {useAtom} from "jotai";
 import {useEffect} from "react";
 import jp from "@/locales/jp.ts";
 import zhCn from "@/locales/zh-cn.ts";
 import en from "@/locales/en.ts";
-import {LanguagePack} from "@/store/language.ts";
+import {LanguageAtom} from "@/store/language.ts";
 
 
 function App() {
-    const setLanguage = useAtom(LanguagePack)[1]
-    const [settings, setSettings] = useAtom(SettingsStorage)
+    const setLanguage = useAtom(LanguageAtom)[1]
+    const [settings, setSettings] = useAtom(SettingsAtom)
     useEffect(() => {
         let newLanguage;
         switch (settings.language) {
@@ -33,14 +33,11 @@ function App() {
             default:
                 newLanguage = {language: en, languageName: "en"};
         }
-
         setLanguage(newLanguage);
-
         // 只有当 `settings.language` 和 `newLanguage.languageName` 不同时才更新 `settings`
         if (settings.language !== newLanguage.languageName) {
-            setSettings(async prev => {
-                const settings = await prev
-                return {...settings, language: newLanguage.languageName}
+            setSettings( prev => {
+                return {...(prev as typeof settings), language: newLanguage.languageName as "jp" | "zh-cn" | "en"}
             });
         }
     }, [settings.language]);
