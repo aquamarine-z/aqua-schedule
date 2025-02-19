@@ -52,6 +52,7 @@ export function UpdateChecker() {
         //console.log('New service worker activated. Refreshing page...');
         console.log('Checking for new updates...');
         const updateSW = registerSW({
+            immediate:false,
             onNeedRefresh() {
                 toast(<UpdateToast onUpdate={async () => {
                     await updateSW(true)

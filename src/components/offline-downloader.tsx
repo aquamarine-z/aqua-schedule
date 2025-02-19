@@ -14,7 +14,9 @@ function OfflineToast() {
 
 export function OfflineDownloader() {
     useEffect(() => {
+
         registerSW({
+            immediate: false,
             onOfflineReady() {
                 toast(<OfflineToast/>)
             },
