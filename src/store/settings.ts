@@ -2,7 +2,7 @@ import {atomWithStorage} from "jotai/utils";
 //import {focusAtom} from "jotai-optics";
 
 export type Settings = {
-    backgroundSettings: {
+    background: {
         backgroundChangeMode: "auto-time" | "auto-open" | "by-user",
         backgroundAutoChangeTime: number,
         backgroundLastChangeTime: number,
@@ -12,7 +12,7 @@ export type Settings = {
     language: "en" | "zh-cn" | "jp"
 }
 export const SettingsAtom = atomWithStorage("settings", {
-        backgroundSettings: {
+        background: {
             backgroundChangeMode: "auto-open" as "auto-time" | "auto-open" | "by-user",
             backgroundAutoChangeTime: 60,
             backgroundLastChangeTime: new Date().getTime(),

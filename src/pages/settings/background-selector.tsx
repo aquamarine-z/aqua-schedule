@@ -30,7 +30,7 @@ export function BackgroundSelector() {
     const [api, setApi] = React.useState<CarouselApi>()
     const backgroundSettings = useBackgroundSettings()
     const [backgrounds,setBackgrounds]=useAtom(BackgroundsAtom)
-    const [currentSelectedBackgroundIndex, setCurrentSelectedBackgroundIndex] = React.useState<number>(settings.backgroundSettings.backgroundCurrentIndex)
+    const [currentSelectedBackgroundIndex, setCurrentSelectedBackgroundIndex] = React.useState<number>(settings.background.backgroundCurrentIndex)
     useEffect(() => {
         if (!api) {
             return
@@ -119,14 +119,14 @@ export function BackgroundSelector() {
             backgrounds.length > 0 &&
             <div className={"w-full flex flex-col gap-1 items-start"}>
                 <Label>{language['settings.background.change.mode.label']}</Label>
-                <Select value={settings.backgroundSettings.backgroundChangeMode} onValueChange={v => {
+                <Select value={settings.background.backgroundChangeMode} onValueChange={v => {
                     setSettings(prev => {
                         const settings =  prev
                         return {
                             ...settings,
-                            backgroundSettings: {
-                                ...settings.backgroundSettings,
-                                backgroundChangeMode: v as typeof settings.backgroundSettings.backgroundChangeMode
+                            background: {
+                                ...settings.background,
+                                backgroundChangeMode: v as typeof settings.background.backgroundChangeMode
                             }
                         }
                     })
@@ -144,18 +144,18 @@ export function BackgroundSelector() {
                     </SelectContent>
                 </Select>
                 {
-                    (settings.backgroundSettings.backgroundChangeMode === "auto-time" || settings.backgroundSettings.backgroundChangeMode === "auto-open") && <>
+                    (settings.background.backgroundChangeMode === "auto-time" || settings.background.backgroundChangeMode === "auto-open") && <>
                         <Label>
                             {language["settings.background.select.mode.label"]}
                         </Label>
-                        <Select value={settings.backgroundSettings.backgroundSelectMethod} onValueChange={v => {
+                        <Select value={settings.background.backgroundSelectMethod} onValueChange={v => {
                             setSettings(prev => {
                                 const settings =prev
                                 return {
                                     ...settings,
-                                    backgroundSettings: {
-                                        ...settings.backgroundSettings,
-                                        backgroundSelectMethod: v as typeof settings.backgroundSettings.backgroundSelectMethod
+                                    background: {
+                                        ...settings.background,
+                                        backgroundSelectMethod: v as typeof settings.background.backgroundSelectMethod
                                     }
                                 }
                             })
@@ -171,9 +171,9 @@ export function BackgroundSelector() {
                             </SelectContent>
                         </Select>
                         {
-                            settings.backgroundSettings.backgroundChangeMode === "auto-time" && <>
+                            settings.background.backgroundChangeMode === "auto-time" && <>
                                 <Label>{language["settings.background.change-time"]}</Label>
-                                <Input type={"number"} value={settings.backgroundSettings.backgroundAutoChangeTime}
+                                <Input type={"number"} value={settings.background.backgroundAutoChangeTime}
                                        onChange={v => {
                                            const value = parseInt(v.target.value)
                                            if (value.toString(10) !== "" && value > 0) {
@@ -181,8 +181,8 @@ export function BackgroundSelector() {
                                                    const settings = prev
                                                    return {
                                                        ...settings,
-                                                       backgroundSettings: {
-                                                           ...settings.backgroundSettings,
+                                                       background: {
+                                                           ...settings.background,
                                                            backgroundAutoChangeTime: value
                                                        }
                                                    }
@@ -196,8 +196,8 @@ export function BackgroundSelector() {
                                 const settings = prev
                                 return {
                                     ...settings,
-                                    backgroundSettings: {
-                                        ...settings.backgroundSettings,
+                                    background: {
+                                        ...settings.background,
                                         backgroundLastChangeTime: new Date().getTime(),
                                         backgroundCurrentIndex: currentSelectedBackgroundIndex
                                     }
@@ -207,9 +207,9 @@ export function BackgroundSelector() {
                         }}><RotateCcw/>{language['settings.background.button.select']}</Button>
                         <Button className={"w-full"} variant={'secondary'} onClick={() => {
                             let nextIndex = 0
-                            if (settings.backgroundSettings.backgroundSelectMethod === "random") {
+                            if (settings.background.backgroundSelectMethod === "random") {
                                 nextIndex = Math.floor(Math.random() * backgrounds.length)
-                            } else if (settings.backgroundSettings.backgroundSelectMethod === "loop") {
+                            } else if (settings.background.backgroundSelectMethod === "loop") {
                                 if (currentSelectedBackgroundIndex === backgrounds.length - 1) nextIndex = 0
                                 else nextIndex = currentSelectedBackgroundIndex + 1
                             }
@@ -217,8 +217,8 @@ export function BackgroundSelector() {
                                 const settings = prev
                                 return {
                                     ...settings,
-                                    backgroundSettings: {
-                                        ...settings.backgroundSettings,
+                                    background: {
+                                        ...settings.background,
                                         backgroundLastChangeTime: new Date().getTime(),
                                         backgroundCurrentIndex: nextIndex
                                     }
@@ -231,14 +231,14 @@ export function BackgroundSelector() {
                     </>
                 }
                 {
-                    settings.backgroundSettings.backgroundChangeMode === "by-user" && <>
+                    settings.background.backgroundChangeMode === "by-user" && <>
                         <Button className={"w-full"} onClick={() => {
                             setSettings(prev => {
                                 const settings = prev
                                 return {
                                     ...settings,
-                                    backgroundSettings: {
-                                        ...settings.backgroundSettings,
+                                    background: {
+                                        ...settings.background,
                                         backgroundCurrentIndex: currentSelectedBackgroundIndex
                                     }
                                 }

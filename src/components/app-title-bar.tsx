@@ -49,10 +49,10 @@ export function AppTitleBar() {
     useEffect(() => {
     }, [backgroundSettings.backgroundsLoaded]);
     useEffect(() => {
-        if (settings.backgroundSettings.backgroundChangeMode === "auto-open") {
+        if (settings.background.backgroundChangeMode === "auto-open") {
             backgroundSettings.nextBackground()
             backgroundSettings.setLastSetBackgroundTime()
-        } else if (settings.backgroundSettings.backgroundChangeMode === "auto-time") {
+        } else if (settings.background.backgroundChangeMode === "auto-time") {
             if (!autoChangeBackground.current) {
                 if (backgroundSettings.checkChangeBackgroundTime()) {
                     backgroundSettings.nextBackground()
@@ -66,7 +66,7 @@ export function AppTitleBar() {
                         backgroundSettings.setLastSetBackgroundTime()
                         console.log(1)
                     }
-                }, settings.backgroundSettings.backgroundAutoChangeTime * 60 * 1000 + 1000)
+                }, settings.background.backgroundAutoChangeTime * 60 * 1000 + 1000)
             }
         }
         return ()=>{
@@ -77,7 +77,7 @@ export function AppTitleBar() {
                 autoChangeBackground.current = undefined
             }
         }
-    }, [ settings.backgroundSettings.backgroundAutoChangeTime, settings.backgroundSettings.backgroundChangeMode]);
+    }, [ settings.background.backgroundAutoChangeTime, settings.background.backgroundChangeMode]);
     const startDate = new Date()
     startDate.setMonth(parseInt(schedule.startTime.month))
     startDate.setDate(parseInt(schedule.startTime.dayOfMonth))

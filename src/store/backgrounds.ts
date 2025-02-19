@@ -51,7 +51,7 @@ export const useBackgroundSettings = () => {
             });
         },
         nowBackground:()=>{
-            return backgrounds[settings.backgroundSettings.backgroundCurrentIndex]
+            return backgrounds[settings.background.backgroundCurrentIndex]
         },
         loadBackgrounds: async () => {
             await setBackgrounds(async prev => {
@@ -60,28 +60,28 @@ export const useBackgroundSettings = () => {
             setBackgroundsLoaded(true)
         },
         nextBackground: () => {
-            let nextIndex = settings.backgroundSettings.backgroundCurrentIndex
-            if (settings.backgroundSettings.backgroundSelectMethod === "random") {
+            let nextIndex = settings.background.backgroundCurrentIndex
+            if (settings.background.backgroundSelectMethod === "random") {
                 nextIndex = Math.floor(Math.random() * backgrounds.length)
-            } else if (settings.backgroundSettings.backgroundSelectMethod === "loop") {
+            } else if (settings.background.backgroundSelectMethod === "loop") {
                 nextIndex = (nextIndex + 1) % backgrounds.length
             }
             setSettings((prev) => ({
                 ...prev,
-                backgroundSettings: {
-                    ...prev.backgroundSettings,
+                background: {
+                    ...prev.background,
                     backgroundCurrentIndex: nextIndex
                 }
             }))
         },
         checkChangeBackgroundTime:()=>{
-            return Date.now() - settings.backgroundSettings.backgroundLastChangeTime > settings.backgroundSettings.backgroundAutoChangeTime * 1000 * 60
+            return Date.now() - settings.background.backgroundLastChangeTime > settings.background.backgroundAutoChangeTime * 1000 * 60
         },
         setLastSetBackgroundTime: () => {
             setSettings((prev) => ({
                 ...prev,
-                backgroundSettings: {
-                    ...prev.backgroundSettings,
+                background: {
+                    ...prev.background,
                     lastSetBackgroundTime: Date.now()
                 }
             }))
