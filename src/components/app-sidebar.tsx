@@ -95,7 +95,7 @@ export function AppSidebar() {
             </SidebarContent>
             <SidebarFooter>
                 <div className={"w-full flex flex-row pl-4 pr-4 items-center"}>
-                    <span>{applicationInformation.versionCode} {applicationInformation.versionName}</span>
+                    <span className={"text-md text-primary/70 font-semibold"}>{applicationInformation.versionCode} {applicationInformation.versionName}</span>
                     <div className={"grow"}/>
                     <Button variant="outline" size="icon" onClick={() => {
                         if (theme.theme === "dark") theme.setTheme("light")

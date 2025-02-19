@@ -88,8 +88,8 @@ export function ScheduleViewer() {
     if (!backgroundSettings.backgroundReady) return <></>
 
     const background = backgroundSettings.nowBackground()
-    return <div className={"relative w-full h-full"}>
-        <img className={"absolute left-0 top-0 w-full h-full -z-10"}
+    return <div className={"relative w-full h-full select-none"}>
+        <img className={ "absolute left-0 top-0 w-full h-full -z-10"}
              src={isBase64Image(background) ? background : backgroundSvg} alt={""}></img>
         <div className={"relative w-full h-full pt-2 pb-2 "}>
             <table className="w-full table-fixed h-12 border-spacing-[2px] border-separate overflow-y-auto">

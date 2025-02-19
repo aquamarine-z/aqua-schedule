@@ -36,7 +36,7 @@ export function ClassInformationDisplay(props: {
                     })}
                 </div>
                 <DialogContentWithoutClose
-                    className={"w-6/8 h-4/8 shadow-2xl outline-0 glass bg-white rounded-2xl flex flex-col border-0 items-center backdrop-blur-xl gap-2 text-black p-2  "}>
+                    className={"select-none w-6/8 h-4/8 shadow-2xl outline-0 glass bg-white rounded-2xl flex flex-col border-0 items-center backdrop-blur-xl gap-2 text-black p-2  "}>
                     <DialogHeader>
                         <DialogTitle
                             className={"mt-2 font-semibold text-2xl mb-2 w-full text-center text-primary opacity-60"}>
