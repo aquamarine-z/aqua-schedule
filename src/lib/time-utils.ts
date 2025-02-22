@@ -37,29 +37,26 @@ export function formatWeeks(weeks: number[]) {
 }
 
 export function getAllDatesOfTheWeek(date: Date, n: number) {
-    n -= 1
+    n -= 1;
     // 复制传入的日期，避免修改原日期
     const current = new Date(date);
+    
     // 获取当前日期的星期（0: 周日, 1: 周一, ...）
     const day = current.getDay();
     // 计算本周周一与当前日期的差值
     // 如果当前日期是周日（day === 0），则将其视为上一周的最后一天，差值为 -6
     const diffToMonday = (day === 0 ? -6 : 1 - day);
-    // 计算出本周周一
+    // 计算出本周周一，并加上 n 个星期（n*7 天）
     const monday = new Date(current);
-    monday.setDate(current.getDate() + diffToMonday);
-
-    // 将本周的周一加上 n 个星期（n*7 天）
-    monday.setDate(monday.getDate() + n * 7);
-
-    // 构造从周一到周日的日期数组
+    monday.setDate(current.getDate() + diffToMonday + n * 7);
+    //console.log(monday.toDateString());
+    // 构造从周一到周日的日期数组，使用时间戳加法来避免月份问题
     const weekDates = [];
     for (let i = 0; i < 7; i++) {
-        const d = new Date(monday);
-        d.setDate(monday.getDate() + i);
-        weekDates.push(d);
+        weekDates.push(new Date(monday.getTime() + i * 24 * 60 * 60 * 1000));
     }
     return weekDates;
 }
+
 
 export const dayChineseName = ["日", "一", "二", "三", "四", "五", "六"]

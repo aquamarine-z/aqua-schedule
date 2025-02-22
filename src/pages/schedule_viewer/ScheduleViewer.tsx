@@ -23,7 +23,7 @@ export function ScheduleViewer() {
     const startTime = new Date()
     const [settings,] = useAtom(SettingsAtom)
     //const [settings] = useAtom(SettingsAtom)
-    startTime.setMonth(parseInt(schedule.startTime.month))
+    startTime.setMonth(parseInt(schedule.startTime.month)-1)
     startTime.setDate(parseInt(schedule.startTime.dayOfMonth))
     startTime.setFullYear(parseInt(schedule.startTime.year))
     const dates = getAllDatesOfTheWeek(startTime, weekIndex)
@@ -96,7 +96,7 @@ export function ScheduleViewer() {
                 <thead className={"h-12 sticky"}>
                     <tr>
                         <th className={"text-lg font-semibold " + tableTextStyle}>
-                            {language["schedule-viewer.month"](dates[0].getMonth())}
+                            {language["schedule-viewer.month"](dates[0].getMonth()+1)}
                         </th>
                         {dates.map((date, index) => (
                             <th key={index} className="text-lg font-semibold">
