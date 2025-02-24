@@ -86,7 +86,7 @@ export function AppTitleBar() {
         }
     }, [settings.background.backgroundAutoChangeTime, backgroundSettings.backgroundsLoaded, settings.background.backgroundChangeMode]);
     const startDate = new Date()
-    startDate.setMonth(parseInt(schedule.startTime.month))
+    startDate.setMonth(parseInt(schedule.startTime.month)-1)
     startDate.setDate(parseInt(schedule.startTime.dayOfMonth))
     startDate.setFullYear(parseInt(schedule.startTime.year))
     return <div className={"h-12 w-full shadow flex flex-row items-center gap-4 pr-4 pl-4"}>
@@ -95,7 +95,7 @@ export function AppTitleBar() {
         {location.pathname === "/" && <><span className={"font-semibold text-md text-gray-500"}>
                             {new Date().toLocaleDateString()}
                         </span><span
-            className={"font-semibold text-md text-gray-500 text-ellipsis text-center"}>{language["title-bar.term-started"](startDate <= new Date())}</span>
+            className={"font-semibold text-md text-gray-500 text-ellipsis text-center"}>{language["title-bar.term-started"](startDate.getTime() <= new Date().getTime())}</span>
             <span
                 className={"font-semibold text-md text-gray-500 text-center"}>{language["title-bar.week-number"](scheduleInformation.viewingWeekIndex)}</span>
             <div className={"grow"}></div>

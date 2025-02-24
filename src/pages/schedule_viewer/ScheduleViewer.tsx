@@ -40,14 +40,17 @@ export function ScheduleViewer() {
     })
 
     const language = useAtom(LanguageAtom)[0].language
+    
     useEffect(() => {
         const nowDate = new Date()
         //如果当前时间在学期开始时间之后，且在学期结束时间之前则自动跳转到当前周
         if (nowDate > startTime) {
             const weekIndex = Math.floor((nowDate.getTime() - startTime.getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1
-            setScheduleInformation({...scheduleInformation, viewingWeekIndex: weekIndex})
+            setScheduleInformation(prev=> {
+                return {...prev, viewingWeekIndex: weekIndex}
+            })
         }
-    }, [scheduleInformation.selectedIndex, scheduleInformation.schedules]);
+    }, []);
     const moveWeek = (state: "left" | "right") => {
         if (state === "left") {
             if (weekIndex > 1) {
@@ -78,8 +81,6 @@ export function ScheduleViewer() {
         if (settings.background.backgroundChangeMode === "auto-switch-view") {
             backgroundSettings.nextBackground()
             backgroundSettings.setBackgroundReady(true)
-
-
         }
         return () => {
             backgroundSettings.setBackgroundReady(false)

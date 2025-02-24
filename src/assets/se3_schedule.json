@@ -1,153 +1,4 @@
 {
-  "name": "SE3-2025-Spring",
-  "startTime": {
-    "year": "2025",
-    "month": "2",
-    "dayOfMonth": "24"
-  },
-  "schoolName": "swu",
-  "timeTable": [
-    {
-      "from": {
-        "hour": 8,
-        "minute": 0
-      },
-      "to": {
-        "hour": 8,
-        "minute": 45
-      }
-    },
-    {
-      "from": {
-        "hour": 8,
-        "minute": 55
-      },
-      "to": {
-        "hour": 9,
-        "minute": 40
-      }
-    },
-    {
-      "from": {
-        "hour": 10,
-        "minute": 0
-      },
-      "to": {
-        "hour": 10,
-        "minute": 45
-      }
-    },
-    {
-      "from": {
-        "hour": 10,
-        "minute": 55
-      },
-      "to": {
-        "hour": 11,
-        "minute": 40
-      }
-    },
-    {
-      "from": {
-        "hour": 12,
-        "minute": 10
-      },
-      "to": {
-        "hour": 12,
-        "minute": 55
-      }
-    },
-    {
-      "from": {
-        "hour": 13,
-        "minute": 5
-      },
-      "to": {
-        "hour": 13,
-        "minute": 50
-      }
-    },
-    {
-      "from": {
-        "hour": 14,
-        "minute": 0
-      },
-      "to": {
-        "hour": 14,
-        "minute": 45
-      }
-    },
-    {
-      "from": {
-        "hour": 14,
-        "minute": 55
-      },
-      "to": {
-        "hour": 15,
-        "minute": 40
-      }
-    },
-    {
-      "from": {
-        "hour": 15,
-        "minute": 50
-      },
-      "to": {
-        "hour": 16,
-        "minute": 35
-      }
-    },
-    {
-      "from": {
-        "hour": 16,
-        "minute": 55
-      },
-      "to": {
-        "hour": 17,
-        "minute": 40
-      }
-    },
-    {
-      "from": {
-        "hour": 17,
-        "minute": 50
-      },
-      "to": {
-        "hour": 18,
-        "minute": 35
-      }
-    },
-    {
-      "from": {
-        "hour": 19,
-        "minute": 20
-      },
-      "to": {
-        "hour": 20,
-        "minute": 5
-      }
-    },
-    {
-      "from": {
-        "hour": 20,
-        "minute": 15
-      },
-      "to": {
-        "hour": 21,
-        "minute": 0
-      }
-    },
-    {
-      "from": {
-        "hour": 21,
-        "minute": 10
-      },
-      "to": {
-        "hour": 21,
-        "minute": 55
-      }
-    }
-  ],
   "classes": [
     {
       "name": "计算机网络",
@@ -900,5 +751,154 @@
       "point": 2.5,
       "classType": 2
     }
-  ]
+  ],
+  "timeTable": [
+    {
+      "from": {
+        "hour": 8,
+        "minute": 0
+      },
+      "to": {
+        "hour": 8,
+        "minute": 45
+      }
+    },
+    {
+      "from": {
+        "hour": 8,
+        "minute": 55
+      },
+      "to": {
+        "hour": 9,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 10,
+        "minute": 0
+      },
+      "to": {
+        "hour": 10,
+        "minute": 45
+      }
+    },
+    {
+      "from": {
+        "hour": 10,
+        "minute": 55
+      },
+      "to": {
+        "hour": 11,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 12,
+        "minute": 10
+      },
+      "to": {
+        "hour": 12,
+        "minute": 55
+      }
+    },
+    {
+      "from": {
+        "hour": 13,
+        "minute": 5
+      },
+      "to": {
+        "hour": 13,
+        "minute": 50
+      }
+    },
+    {
+      "from": {
+        "hour": 14,
+        "minute": 0
+      },
+      "to": {
+        "hour": 14,
+        "minute": 45
+      }
+    },
+    {
+      "from": {
+        "hour": 14,
+        "minute": 55
+      },
+      "to": {
+        "hour": 15,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 15,
+        "minute": 50
+      },
+      "to": {
+        "hour": 16,
+        "minute": 35
+      }
+    },
+    {
+      "from": {
+        "hour": 16,
+        "minute": 55
+      },
+      "to": {
+        "hour": 17,
+        "minute": 40
+      }
+    },
+    {
+      "from": {
+        "hour": 17,
+        "minute": 50
+      },
+      "to": {
+        "hour": 18,
+        "minute": 35
+      }
+    },
+    {
+      "from": {
+        "hour": 19,
+        "minute": 20
+      },
+      "to": {
+        "hour": 20,
+        "minute": 5
+      }
+    },
+    {
+      "from": {
+        "hour": 20,
+        "minute": 15
+      },
+      "to": {
+        "hour": 21,
+        "minute": 0
+      }
+    },
+    {
+      "from": {
+        "hour": 21,
+        "minute": 10
+      },
+      "to": {
+        "hour": 21,
+        "minute": 55
+      }
+    }
+  ],
+  "schoolName": "swu",
+  "startTime": {
+    "year": "2025",
+    "month": "2",
+    "dayOfMonth": "24"
+  },
+  "name": "SE3-2025-Spring"
 }
