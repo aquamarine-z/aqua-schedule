@@ -38,18 +38,26 @@ export function ClassInformationDisplay(props: {
                 <ExtendedDialogContent
                     closeButton={false}
                     stopEvents={true}
-                    onTouchStart={(e) => e.stopPropagation()}
-                    onTouchEnd={(e) => e.stopPropagation()}
                     className={"select-none w-6/8 h-4/8 shadow-2xl outline-0 glass bg-white rounded-2xl flex flex-col border-0 items-center backdrop-blur-xl gap-2 text-black p-2  "}>
-                    <DialogHeader>
+                    <DialogHeader className={"w-full"}
+                                  onTouchStart={(e) => e.stopPropagation()}
+                                  onTouchEnd={(e) => e.stopPropagation()
+                                  }>
                         <DialogTitle
                             className={"mt-2 font-semibold text-2xl mb-2 w-full text-center text-primary opacity-60"}>
                             {props.classInformation.name}
 
                         </DialogTitle>
                     </DialogHeader>
-                    <div className={"w-full overflow-y-auto noScrollBar"}>
-                        <table className={"w-full table-fixed border-spacing-[8px] border-separate"}>
+                    <div
+                        className={"w-full overflow-y-auto noScrollBar"}
+                        //onTouchStartCapture={(e) => e.stopPropagation()}
+                        onTouchEndCapture={(e) => e.stopPropagation()}
+                    >
+
+                        <table
+
+                            className={"w-full table-fixed border-spacing-[8px] border-separate"}>
                             <tbody>
                                 {Array.from(dialogInformation.entries()).map(([key, value]) => {
                                     return <tr key={key}>
