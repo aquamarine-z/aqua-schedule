@@ -28,7 +28,7 @@ function dialogInformationExtractorForSwu(information: ScheduleClass): Map<strin
 
 function blockInformationExtractorForSwu(information: ScheduleClass): Array<string> {
     const info = information as (ScheduleClass & ExternalInformationSwu)
-    return [info.name, info.classLocation]
+    return [info.name, info.classLocation!]
 }
 
 function blockInformationExtractorDefault(information: ScheduleClass): Array<string> {

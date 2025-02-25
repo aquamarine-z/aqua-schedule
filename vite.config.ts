@@ -4,7 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import * as path from "node:path";
 import {VitePWA} from 'vite-plugin-pwa';
 // https://vite.dev/config/
-export const getCache = ({name, pattern}: any) => ({
+export const getCache = ({name, pattern}: never) => ({
     urlPattern: pattern,
     handler: 'CacheFirst' as const,
     options: {

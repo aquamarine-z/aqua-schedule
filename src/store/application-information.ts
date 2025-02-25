@@ -5,6 +5,6 @@ export interface ApplicationInformation{
     versionName?:string
 }
 export const ApplicationInformationAtom=atom({
-    versionCode:"0.1.5",
+    versionCode:"0.1.6",
     versionName:"Beta",
 } as ApplicationInformation)

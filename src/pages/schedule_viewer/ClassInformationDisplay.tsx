@@ -1,6 +1,6 @@
 import {Dialog, DialogHeader, DialogTitle} from "@/components/ui/dialog.tsx";
 import {useState} from "react";
-import {DialogContentWithoutClose} from "@/components/ui/dialog-content-without-close.tsx";
+import {ExtendedDialogContent} from "@/components/ui/dialog-extensions.tsx";
 import {ScheduleClass, SchoolName} from "@/constants/schedule-types.ts";
 import {getExtractorByName} from "@/pages/schedule_viewer/InformationExtractor.tsx";
 
@@ -11,7 +11,7 @@ export function ClassInformationDisplay(props: {
     schoolName?: SchoolName
 }) {
     const [openDialog, setOpenDialog] = useState(false)
-    
+
 
     if (!props.classInformation) {
         return <td key={props.dayIndex}/>
@@ -25,7 +25,7 @@ export function ClassInformationDisplay(props: {
                    }}
                    className={"h-full overflow-hidden shadow-2xl glass w-full rounded-lg "}
                    rowSpan={props.classInformation.classIndexTo - props.classInformation.classIndexFrom + 1}>
-            <Dialog open={openDialog} onOpenChange={open => setOpenDialog(open)} modal>
+            <Dialog open={openDialog} onOpenChange={open => setOpenDialog(open)} modal={true}>
 
                 <div
                     className={"w-full max-h-full flex items-center flex-col justify-start p-1 gap-2"}>
@@ -35,7 +35,11 @@ export function ClassInformationDisplay(props: {
                             key={index}>{it}</p>
                     })}
                 </div>
-                <DialogContentWithoutClose
+                <ExtendedDialogContent
+                    closeButton={false}
+                    stopEvents={true}
+                    onTouchStart={(e) => e.stopPropagation()}
+                    onTouchEnd={(e) => e.stopPropagation()}
                     className={"select-none w-6/8 h-4/8 shadow-2xl outline-0 glass bg-white rounded-2xl flex flex-col border-0 items-center backdrop-blur-xl gap-2 text-black p-2  "}>
                     <DialogHeader>
                         <DialogTitle
@@ -61,7 +65,7 @@ export function ClassInformationDisplay(props: {
                         </table>
                     </div>
 
-                </DialogContentWithoutClose>
+                </ExtendedDialogContent>
             </Dialog>
         </td>
     } else return <></>

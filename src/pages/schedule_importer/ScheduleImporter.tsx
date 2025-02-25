@@ -165,8 +165,6 @@ export function ScheduleImporter() {
                 schoolName:"swu"
             }
             toast("保存成功!")
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-expect-error
             setScheduleInformation({...scheduleInformation, schedules: [...scheduleInformation.schedules, newSchedule]})
         }}>保存到列表</Button>
 

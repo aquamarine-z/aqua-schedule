@@ -17,7 +17,13 @@ import {cn} from "@/lib/utils.ts";
 
 import {useAtom} from "jotai";
 import {ScheduleInformationAtom} from "@/store/schedule.ts";
-import {ExternalInformationSwu, Schedule, ScheduleClass, scheduleMapDefaults} from "@/constants/schedule-types.ts";
+import {
+    createEmptySchedule,
+    ExternalInformationSwu,
+    Schedule,
+    ScheduleClass,
+    scheduleMapDefaults
+} from "@/constants/schedule-types.ts";
 import {toast} from "sonner";
 
 
@@ -172,7 +178,7 @@ export function ScheduleExtractor() {
             return
         }
         if (confirm("解析完成 点击确认将其添加到课程表列表吗?")) {
-            const schedule = new Schedule()
+            const schedule = createEmptySchedule()
             schedule.classes = resultArray
             schedule.name = name
             schedule.startTime = {

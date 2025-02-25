@@ -3,7 +3,7 @@ import {ScheduleInformationAtom} from "@/store/schedule.ts";
 import {useEffect, useState} from "react";
 import backgroundSvg from "@/assets/background_default_2.png"
 import {ClassInformationDisplay} from "@/pages/schedule_viewer/ClassInformationDisplay.tsx";
-import {ScheduleClass, scheduleMapDefaults} from "@/constants/schedule-types.ts";
+import {ScheduleClass, scheduleMapDefaults, SchoolName} from "@/constants/schedule-types.ts";
 import {getAllDatesOfTheWeek} from "@/lib/time-utils.ts";
 import {LanguageAtom} from "@/store/language.ts";
 import {isBase64Image} from "@/lib/file-utils.ts";
@@ -23,12 +23,13 @@ export function ScheduleViewer() {
     const startTime = new Date()
     const [settings,] = useAtom(SettingsAtom)
     //const [settings] = useAtom(SettingsAtom)
-    startTime.setMonth(parseInt(schedule.startTime.month)-1)
+    startTime.setMonth(parseInt(schedule.startTime.month) - 1)
     startTime.setDate(parseInt(schedule.startTime.dayOfMonth))
     startTime.setFullYear(parseInt(schedule.startTime.year))
     const dates = getAllDatesOfTheWeek(startTime, weekIndex)
     const [touchStartPosition, setTouchStartPosition] = useState({x: 0, y: 0})
-    const touchMoveLength = 50
+    const touchMoveXMinimum = 30
+    const touchMoveYMaximum = 70
     let timeTable = schedule.timeTable
     if (!timeTable || !Array.isArray(timeTable)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -40,17 +41,18 @@ export function ScheduleViewer() {
     })
 
     const language = useAtom(LanguageAtom)[0].language
-    
+
     useEffect(() => {
         const nowDate = new Date()
         //如果当前时间在学期开始时间之后，且在学期结束时间之前则自动跳转到当前周
         if (nowDate > startTime) {
             const weekIndex = Math.floor((nowDate.getTime() - startTime.getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1
-            setScheduleInformation(prev=> {
+            setScheduleInformation(prev => {
                 return {...prev, viewingWeekIndex: weekIndex}
             })
         }
     }, []);
+
     const moveWeek = (state: "left" | "right") => {
         if (state === "left") {
             if (weekIndex > 1) {
@@ -72,6 +74,8 @@ export function ScheduleViewer() {
                 result = classInformation as ScheduleClass
             }
         })
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         return result as unknown as typeof schedule.classes[0]
     }
     const tableTextStyle = "text-gray-200/70"
@@ -85,19 +89,19 @@ export function ScheduleViewer() {
         return () => {
             backgroundSettings.setBackgroundReady(false)
         }
-    }, [settings.background.backgroundChangeMode,scheduleInformation.selectedIndex]);
+    }, [settings.background.backgroundChangeMode, scheduleInformation.selectedIndex]);
     if (!backgroundSettings.backgroundReady) return <></>
 
     const background = backgroundSettings.nowBackground()
     return <div className={"relative w-full h-full select-none"}>
-        <img className={ "absolute left-0 top-0 w-full h-full -z-10"}
+        <img className={"absolute left-0 top-0 w-full h-full -z-10"}
              src={isBase64Image(background) ? background : backgroundSvg} alt={""}></img>
         <div className={"relative w-full h-full pt-2 pb-2 "}>
             <table className="w-full table-fixed h-12 border-spacing-[2px] border-separate overflow-y-auto">
                 <thead className={"h-12 sticky"}>
                     <tr>
                         <th className={"text-lg font-semibold " + tableTextStyle}>
-                            {language["schedule-viewer.month"](dates[0].getMonth()+1)}
+                            {language["schedule-viewer.month"](dates[0].getMonth() + 1)}
                         </th>
                         {dates.map((date, index) => (
                             <th key={index} className="text-lg font-semibold">
@@ -115,11 +119,14 @@ export function ScheduleViewer() {
                 <table
                     onTouchEnd={(e) => {
                         const endPositionX = e.changedTouches[0].clientX
+                        const endPositionY = e.changedTouches[0].clientY
                         const deltaX = endPositionX - touchStartPosition.x
-                        if (deltaX > touchMoveLength) {
+                        const deltaY = endPositionY - touchStartPosition.y
+                        if (Math.abs(deltaY) > touchMoveYMaximum) return
+                        if (deltaX > touchMoveXMinimum) {
                             moveWeek("left")
                         }
-                        if (deltaX < -touchMoveLength) {
+                        if (deltaX < -touchMoveXMinimum) {
                             moveWeek("right")
                         }
                     }}
@@ -152,7 +159,7 @@ export function ScheduleViewer() {
                                     return <ClassInformationDisplay classIndex={index + 1} key={dayIndex}
                                                                     dayIndex={dayIndex}
                                                                     classInformation={classInformation}
-                                                                    schoolName={schedule.schoolName}/>
+                                                                    schoolName={schedule.schoolName as SchoolName}/>
                                 })}
                             </tr>
                         ))}

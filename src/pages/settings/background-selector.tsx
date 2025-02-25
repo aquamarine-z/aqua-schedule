@@ -14,7 +14,7 @@ import {
 import {Dialog, DialogHeader, DialogTitle, DialogTrigger} from "@/components/ui/dialog.tsx";
 import {Button} from "@/components/ui/button.tsx";
 import {ChevronsUpDown, CirclePlusIcon, RotateCcw, Trash2Icon} from "lucide-react";
-import {DialogContentWithoutClose} from "@/components/ui/dialog-content-without-close.tsx";
+import {ExtendedDialogContent} from "@/components/ui/dialog-extensions.tsx";
 import {DialogClose} from "@radix-ui/react-dialog";
 import {loadImagesBase64} from "@/lib/file-utils.ts";
 import {toast} from "sonner";
@@ -85,7 +85,7 @@ export function BackgroundSelector() {
                             <Button variant={"destructive"}><Trash2Icon/>{language['settings.background.remove']}
                             </Button>
                         </DialogTrigger>
-                        <DialogContentWithoutClose className={"items-center flex flex-col justify-start pt-4"}>
+                        <ExtendedDialogContent className={"items-center flex flex-col justify-start pt-4"}>
                             <DialogHeader>
                                 <DialogTitle className={"font-semibold text-2xl text-primary"}>
                                     {language["settings.background.remove.dialog.title"]}
@@ -113,7 +113,7 @@ export function BackgroundSelector() {
                                     </Button>
                                 </DialogClose>
                             </div>
-                        </DialogContentWithoutClose>
+                        </ExtendedDialogContent>
                     </Dialog>
                     }
                     <Button onClick={async () => {
