@@ -26,6 +26,57 @@ import {
 } from "@/constants/schedule-types.ts";
 import {toast} from "sonner";
 
+function parseClassScheduleSwu(scheduleString: string) {
+    // 用于存储结果的数组
+
+    // 使用正则表达式匹配节数范围
+    const classPattern = /\((\d+)(?:-(\d+))?节\)/;
+    const classMatch = scheduleString.match(classPattern);
+
+    if (!classMatch) {
+        console.error("无法读取此课程表 格式错误");
+        return null;
+    }
+
+    // 解析节数范围
+    const classIndexFrom = parseInt(classMatch[1], 10);
+    const classIndexTo = classMatch[2] ? parseInt(classMatch[2], 10) : classIndexFrom;
+
+    // 去掉节数部分，剩下周数部分
+    const weeksPart = scheduleString.replace(classPattern, '').trim();
+
+    // 分割周数部分
+    const weekSegments = weeksPart.split(',');
+    const weekIndex = [] as number[];
+    // 解析每个周数段
+    weekSegments.forEach(segment => {
+
+        const weekPattern = /(\d+)(?:-(\d+))?周(?:\((单|双)\))?/;
+        const weekMatch = segment.match(weekPattern);
+
+        if (weekMatch) {
+            const weekFrom = parseInt(weekMatch[1], 10);
+            const weekTo = weekMatch[2] ? parseInt(weekMatch[2], 10) : weekFrom;
+            const weekType = weekMatch[3]; // '单' 或 '双'，如果存在
+
+            for (let i = weekFrom; i <= weekTo; i++) {
+                // 如果有 '单' 或 '双' 标记，进行过滤
+                if (weekType === '单' && i % 2 === 0) continue;
+                if (weekType === '双' && i % 2 !== 0) continue;
+                weekIndex.push(i);
+            }
+        } else {
+            console.error("无法读取此课程表 格式错误");
+            return null
+        }
+    });
+
+    return {
+        weekIndex:weekIndex,
+        classIndexTo:classIndexTo,
+        classIndexFrom:classIndexFrom,
+    }
+}
 
 function extractSchedule(textContent: string) {
     const resultArray: ScheduleClass[] = []
@@ -54,7 +105,7 @@ function extractSchedule(textContent: string) {
             let totalTimeElement: string | null = null
             let pointElement: string | null = null
 
-            let name = classElement.querySelector("span.title font")?.textContent || ""
+            let name = classElement.querySelector(".title")?.textContent || ""
             let classType: number
             switch (name.charAt(name.length - 1)) {
                 case "◆":
@@ -106,33 +157,55 @@ function extractSchedule(textContent: string) {
                         pointElement = pElement.textContent
                         break
                 }
+                switch (span?.getAttribute("data-original-title")) {
+                    case "节/周":
+                        timeElement = pElement.textContent
+                        break
+                    case "上课地点":
+                        classLocationElement = pElement.textContent?.trim() || ""
+                        break
+                    case "教师 ":
+                        teacherElement = pElement.textContent
+                        break
+                    case "教学班名称":
+                        teachingClassNameElement = pElement.textContent
+                        break
+                    case "教学班组成":
+                        teachingClassCompositionElement = pElement.textContent
+                        break
+                    case "考核方式":
+                        examinationTypeElement = pElement.textContent
+                        break
+                    case "选课备注":
+                        commentElement = pElement.textContent
+                        break
+                    case "课程学时组成":
+                        timeCompositionElement = pElement.textContent
+                        break
+                    case "周学时":
+                        weekTimeElement = pElement.textContent
+                        break
+                    case "总学时":
+                        totalTimeElement = pElement.textContent
+                        break
+                    case "学分":
+                        pointElement = pElement.textContent
+                        break
+                }
             })
-            //console.log(timeElement)
-            const pattern = /\((\d+)(?:-(\d+))?节\)(\d+(?:-\d+)?周)/;
-            const match = timeElement!.match(pattern);
+
             const classInformation = {
                 name,
             } as ScheduleClass & ExternalInformationSwu
-            if (match) {
-                const classIndexFrom = parseInt(match[1], 10);
-                const classIndexTo = parseInt(match[2], 10);
-                const weekInformationString = match[3];
-                if (weekInformationString.includes("-")) {
-                    classInformation.weekIndex = []
-                    const [weekIndexFrom, weekIndexTo] = weekInformationString.split("-").map(weekIndex => parseInt(weekIndex, 10));
-                    for (let i = weekIndexFrom; i <= weekIndexTo; i++) {
-                        classInformation.weekIndex.push(i)
-                    }
-                } else {
-                    classInformation.weekIndex = [parseInt(weekInformationString, 10)];
-                }
-                classInformation.classIndexFrom = classIndexFrom
-                classInformation.classIndexTo = classIndexTo
-
-            } else {
-                toast(<span className={"text-red-500"}>无法读取此课程表 格式错误</span>)
-
+            const timeInformation=parseClassScheduleSwu(timeElement!)
+            if(!timeInformation){
+                console.error(classElement)
+                return
             }
+            classInformation.weekIndex = timeInformation.weekIndex
+            classInformation.classIndexFrom = timeInformation.classIndexFrom
+            classInformation.classIndexTo = timeInformation.classIndexTo
+
             classInformation.weekday = weekday
             classInformation.classLocation = classLocationElement!
             classInformation.teachers = teacherElement!.split(",").map(teacher => teacher.trim()) || []
@@ -145,6 +218,7 @@ function extractSchedule(textContent: string) {
             classInformation.totalTime = parseInt(totalTimeElement || "0", 10)
             classInformation.point = parseFloat(pointElement || "0")
             classInformation.classType = classType
+
             resultArray.push(classInformation)
         })
 
