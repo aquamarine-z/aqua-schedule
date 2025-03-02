@@ -15,10 +15,11 @@ export function AddClassDialog() {
     const language=useAtom(LanguageAtom)[0].language
     return <Dialog>
         <DialogTrigger asChild className={"w-full"}>
-            <Button variant={"ghost"} className={"w-7/8"}>
-                <div className={"w-full flex flex-row items-center justify-center"}>
+            <Button variant={"ghost"} className={"w-full"}>
+                
+                <div className={"w-full flex flex-row items-center gap-5"}>
                     <CirclePlusIcon className={"w-1/4"}/>
-                    <span className={"w-3/4"}>{language['title-bar.popover.add-class-button']}</span>
+                    <span className={"w-3/4 text-center text-wrap"}>{language['title-bar.popover.add-class-button']}</span>
 
                 </div>
             </Button>

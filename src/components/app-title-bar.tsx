@@ -104,13 +104,13 @@ export function AppTitleBar() {
                     <Button onClick={() => setPopoverOpen(!popoverOpen)} variant="outline">{popoverOpen ?
                         <ArrowUpIcon/> : <MoreHorizontalIcon/>}</Button>
                 </PopoverTrigger>
-                <PopoverContent className="w-fit max-w-[80vw] mr-2 ml-2 flex items-center flex-col gap-4">
+                <PopoverContent className="w-fit max-w-[80vw] mr-2 ml-2 flex items-center flex-col gap-4 justify-start">
                     <Dialog>
-                        <DialogTrigger asChild className={"w-full"}>
-                            <Button variant={"ghost"} className={"w-fit"}>
-                                <div className={"w-full flex flex-row items-center justify-center"}>
+                        <DialogTrigger asChild className={"w-full max-w-full"}>
+                            <Button variant={"ghost"} className={"w-full"}>
+                                <div className={"w-full flex flex-row items-center gap-5"}>
                                     <ClipboardPen className={"w-1/4"}/>
-                                    <span className={"w-3/4"}>
+                                    <span className={"w-3/4 text-center text-center text-wrap"}>
                                         {language['title-bar.popover.rename-button']}
                                     </span>
                                 </div>
@@ -156,10 +156,10 @@ export function AppTitleBar() {
                     </Dialog>
                     <Dialog>
                         <DialogTrigger asChild className={"w-full"}>
-                            <Button variant={"ghost"} className={"w-fit"}>
-                                <div className={"w-full flex flex-row items-center justify-center"}>
+                            <Button variant={"ghost"} className={"w-full"}>
+                                <div className={"w-full flex flex-row items-center gap-5"}>
                                     <CircleArrowUpIcon className={"w-1/4"}/>
-                                    <span className={"w-3/4"}>
+                                    <span className={"w-3/4 text-center text-wrap"}>
                                         {language['title-bar.popover.export-button']}
                                     </span>
                                 </div>
@@ -204,7 +204,7 @@ export function AppTitleBar() {
                     </Dialog>
                     <AddClassDialog/>
                     <Dialog>
-                        <DialogTrigger>
+                        <DialogTrigger className={""}>
                             <Button variant="destructive" onClick={() => {
                             }}><DeleteIcon/>{language['title-bar.popover.delete-button']}</Button>
                         </DialogTrigger>

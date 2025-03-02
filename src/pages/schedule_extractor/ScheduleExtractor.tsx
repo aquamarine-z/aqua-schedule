@@ -205,7 +205,7 @@ function extractSchedule(textContent: string) {
             classInformation.weekIndex = timeInformation.weekIndex
             classInformation.classIndexFrom = timeInformation.classIndexFrom
             classInformation.classIndexTo = timeInformation.classIndexTo
-
+            
             classInformation.weekday = weekday
             classInformation.classLocation = classLocationElement!
             classInformation.teachers = teacherElement!.split(",").map(teacher => teacher.trim()) || []
