@@ -85,10 +85,13 @@ export function AppTitleBar() {
             }
         }
     }, [settings.background.backgroundAutoChangeTime, backgroundSettings.backgroundsLoaded, settings.background.backgroundChangeMode]);
-    const startDate = new Date()
-    startDate.setMonth(parseInt(schedule.startTime.month)-1)
-    startDate.setDate(parseInt(schedule.startTime.dayOfMonth))
-    startDate.setFullYear(parseInt(schedule.startTime.year))
+    const startDate = new Date(
+        parseInt(schedule.startTime.year),
+        parseInt(schedule.startTime.month) - 1,
+        parseInt(schedule.startTime.dayOfMonth)
+    );
+    //console.log(parseInt(schedule.startTime.month)-1)
+    //console.log(scheduleInformation.viewingWeekIndex)
     return <div className={"h-12 w-full shadow flex flex-row items-center gap-4 pr-4 pl-4"}>
 
         <SidebarTrigger className={"w-12 h-12 p-2 font-serif"}/>

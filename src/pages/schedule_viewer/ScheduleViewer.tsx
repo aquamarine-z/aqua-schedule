@@ -20,12 +20,14 @@ export function ScheduleViewer() {
     const [scheduleInformation, setScheduleInformation] = useAtom(ScheduleInformationAtom)
     const schedule = scheduleInformation.schedules[scheduleInformation.selectedIndex]
     const weekIndex = scheduleInformation.viewingWeekIndex
-    const startTime = new Date()
+
     const [settings,] = useAtom(SettingsAtom)
     //const [settings] = useAtom(SettingsAtom)
-    startTime.setMonth(parseInt(schedule.startTime.month) - 1)
-    startTime.setDate(parseInt(schedule.startTime.dayOfMonth))
-    startTime.setFullYear(parseInt(schedule.startTime.year))
+    const startTime = new Date(
+        parseInt(schedule.startTime.year),
+        parseInt(schedule.startTime.month) - 1,
+        parseInt(schedule.startTime.dayOfMonth)
+    );
     const dates = getAllDatesOfTheWeek(startTime, weekIndex)
     const [touchStartPosition, setTouchStartPosition] = useState({x: 0, y: 0})
     const touchMoveXMinimum = 30
@@ -45,6 +47,8 @@ export function ScheduleViewer() {
     useEffect(() => {
         const nowDate = new Date()
         //如果当前时间在学期开始时间之后，且在学期结束时间之前则自动跳转到当前周
+        console.log(startTime)
+        console.log(schedule.startTime)
         if (nowDate > startTime) {
             const weekIndex = Math.floor((nowDate.getTime() - startTime.getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1
             setScheduleInformation(prev => {
