@@ -31,6 +31,7 @@ export function BackgroundSelector() {
     const [api, setApi] = React.useState<CarouselApi>()
     const backgroundSettings = useBackgroundSettings()
     const [backgrounds, setBackgrounds] = useAtom(BackgroundsAtom)
+    
     const [currentSelectedBackgroundIndex, setCurrentSelectedBackgroundIndex] = React.useState<number>(settings.background.backgroundCurrentIndex)
     useEffect(() => {
         if (!api) {

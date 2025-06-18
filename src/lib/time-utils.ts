@@ -25,7 +25,6 @@ export function formatWeeks(weeks: number[]) {
             end = weeks[i];
         }
     }
-
     // 处理最后的区间
     if (start === end) {
         result.push(`${start}`);

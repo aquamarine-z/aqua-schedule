@@ -93,7 +93,6 @@ export function AppTitleBar() {
     //console.log(parseInt(schedule.startTime.month)-1)
     //console.log(scheduleInformation.viewingWeekIndex)
     return <div className={"h-12 w-full shadow flex flex-row items-center gap-4 pr-4 pl-4"}>
-
         <SidebarTrigger className={"w-12 h-12 p-2 font-serif"}/>
         {location.pathname === "/" && <><span className={"font-semibold text-md text-gray-500"}>
                             {new Date().toLocaleDateString()}
