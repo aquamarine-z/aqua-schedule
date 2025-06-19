@@ -23,7 +23,7 @@ export const getCache = ({name, pattern}: never) => ({
 export default defineConfig({
     base: '/aqua-schedule/',
     plugins: [react(), tailwindcss(), legacy({
-        targets: ['ie >= 11', 'chrome 52', 'Android 4.1', 'iOS 7.1'],
+        targets: ['iOS 7.1'],
         modernPolyfills: true,
         additionalLegacyPolyfills: ['regenerator-runtime/runtime'],
     }),
@@ -75,7 +75,7 @@ export default defineConfig({
             }
         })],
     build: {
-        target: ['es2015', 'iOS 7.1'],
+        target: ['iOS 7.1'],
         minify: 'terser',
     },
     resolve: {
@@ -83,4 +83,7 @@ export default defineConfig({
             "@": path.resolve(__dirname, "./src"),
         },
     },
+    server:{
+        host:"0.0.0.0"
+    }
 })
